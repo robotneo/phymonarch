@@ -2,7 +2,7 @@
 💻📊🔥✅
 基于 **`SNMP`** 协议的监控戴尔物理机 **`iDRAC`** 信息的 **`Grafana`** 面板。
 
-> Grafana Dashboard ID:  **`21107`**
+在这里将分别使用两个不同的采集器适配不同的监控架构，一个是基于 **`pull`** 模式的 **`SNMP Exporter`** 采集器，另外一个是基于 **`push`** 模式的 **`Categraf`** 采集器。 
 
 面板详细：
 
@@ -33,9 +33,13 @@
 
 更多信息可直接在采集配置文件中添加对应的 OID 实现。 
 
+> Categraf 夜莺体系
+
+Grafana Dashboard ID:  **`21107`**
+
 ### 如何使用
 
-把需要监控的主机 **`iDRAC`** 中的 **`SNMP v2`** 打开，安装并设置 **`Categraf + VictoriaMetrics + Grafana`** 以相互配合。
+把需要监控的物理机带外管理 **`iDRAC`** 中的 **`SNMP v2`** 打开，安装并设置 **`Categraf + VictoriaMetrics + Grafana`** 以相互配合。
 
 使用提供的 **`snmp_dell_idrac.toml`** 文件放置在 **`/opt/categraf/conf/inputs.snmp/`** 文件夹中，并在 **`agents`** 下编辑您的物理机 **`iDRAC IP`** 或主机名替换 **`iDRACURLx`** 的值，如下所示：
 
@@ -86,6 +90,14 @@ agents = [
 ### 已知问题
 
 - 暂未发现
+
+> SNMP Exporter 体系
+
+### 如何使用
+
+把需要监控的物理机带外管理 **`iDRAC`** 中的 **`SNMP v2`** 打开，安装并设置 **`SNMP Exporter + VictoriaMetrics + vmagent + Grafana`** 以相互配合。
+
+使用提供的 **`snmp_idrac.yml`** 文件放置在 **`/opt/snmp_exporter/conf/`** 文件夹中，并在 **`vmagent`** 下的抓取配置中添加 **`job_name`** 。
 
 ### 更多信息
 
