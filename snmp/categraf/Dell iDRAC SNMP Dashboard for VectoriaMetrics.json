@@ -1,12 +1,12 @@
 {
   "__inputs": [
     {
-      "name": "DS_VICTORIAMETRICS-SINGLE",
-      "label": "VictoriaMetrics-Single",
+      "name": "DS_VICTORIAMETRICS-METRICS-DATASOURCE",
+      "label": "victoriametrics-metrics-datasource",
       "description": "",
       "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
+      "pluginId": "victoriametrics-metrics-datasource",
+      "pluginName": "VictoriaMetrics"
     }
   ],
   "__elements": {},
@@ -15,13 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.4.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
+      "version": "11.5.2"
     },
     {
       "type": "panel",
@@ -40,6 +34,12 @@
       "id": "timeseries",
       "name": "Time series",
       "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "victoriametrics-metrics-datasource",
+      "name": "VictoriaMetrics",
+      "version": "0.13.3"
     }
   ],
   "annotations": {
@@ -63,7 +63,44 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "links": [],
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "bolt",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "更新",
+      "tooltip": "更新仪表板",
+      "type": "link",
+      "url": "https://grafana.com/grafana/dashboards/21107"
+    },
+    {
+      "asDropdown": false,
+      "icon": "doc",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "GitHub",
+      "tooltip": "Github：robotneo",
+      "type": "link",
+      "url": "https://github.com/robotneo/idrac-monitor"
+    },
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "面板列表",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
   "panels": [
     {
       "collapsed": false,
@@ -80,8 +117,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "服务器系统基础信息",
       "fieldConfig": {
@@ -120,7 +157,7 @@
               },
               {
                 "id": "custom.minWidth",
-                "value": 60
+                "value": 50
               },
               {
                 "id": "custom.width"
@@ -581,12 +618,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -599,8 +636,8 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -687,7 +724,11 @@
                 "aggregations": [],
                 "operation": "groupby"
               },
-              "{__name__=\"snmp_icmp_up\", agent_hostname=\"categraf\", brand=\"dell\", device_ip=\"172.17.42.1\", region=\"hangzhou\", role=\"idrac\"}": {
+              "instance": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "{__name__=\"snmp_icmp_up\", agent_hostname=\"categraf\", brand=\"dell\", instance=\"172.17.42.1\", region=\"hangzhou\", role=\"idrac\"}": {
                 "aggregations": []
               }
             }
@@ -706,9 +747,10 @@
               "Value #A (lastNotNull)": true,
               "__name__": true,
               "agent_hostname": true,
+              "device_ip": false,
               "region": true,
               "role": true,
-              "{__name__=\"snmp_icmp_up\", agent_hostname=\"categraf\", brand=\"dell\", device_ip=\"172.17.42.1\", region=\"hangzhou\", role=\"idrac\"}": false
+              "{__name__=\"snmp_icmp_up\", agent_hostname=\"categraf\", brand=\"dell\", instance=\"172.17.42.1\", region=\"hangzhou\", role=\"idrac\"}": false
             },
             "includeByName": {},
             "indexByName": {
@@ -746,8 +788,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器系统启动时间信息",
       "fieldConfig": {
@@ -783,6 +825,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -794,16 +837,16 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_system_power_uptime{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"} / 3600 / 24",
+          "expr": "snmp_dell_system_power_uptime{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"} / 3600 / 24",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -815,8 +858,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器全局系统电源状态信息",
       "fieldConfig": {
@@ -875,6 +918,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -886,15 +930,15 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "snmp_dell_system_power_state{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_system_power_state{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -906,8 +950,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器全局系统状态信息",
       "fieldConfig": {
@@ -976,6 +1020,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -987,15 +1032,15 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "snmp_dell_glob_system_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_glob_system_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1007,8 +1052,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器全局存储状态信息",
       "fieldConfig": {
@@ -1077,6 +1122,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1088,15 +1134,15 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "snmp_dell_global_storage_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_global_storage_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1108,8 +1154,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器设备BIOS状态信息",
       "fieldConfig": {
@@ -1327,16 +1373,16 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_bios_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_bios_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1358,6 +1404,7 @@
               "dell_service_tag": true,
               "device_ip": true,
               "index": true,
+              "instance": true,
               "region": true,
               "role": true
             },
@@ -1372,8 +1419,8 @@
               "brand": 5,
               "dell_idrac_shortname": 6,
               "dell_service_tag": 7,
-              "device_ip": 8,
               "index": 9,
+              "instance": 8,
               "region": 10,
               "role": 11
             },
@@ -1385,8 +1432,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器事件日志中的条目数",
       "fieldConfig": {
@@ -1402,6 +1449,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "hue",
@@ -1463,22 +1511,23 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_num_event_log{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_num_event_log{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "instant": false,
-          "legendFormat": "{{device_ip}}",
+          "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
@@ -1488,8 +1537,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "物理机使用功率",
       "fieldConfig": {
@@ -1505,6 +1554,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "hue",
@@ -1568,19 +1618,20 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "snmp_dell_amperage_reading{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_amperage_reading{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "instant": false,
           "legendFormat": "{{power_location_name}}",
           "range": true,
@@ -1592,8 +1643,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器设备LCD状态信息",
       "fieldConfig": {
@@ -1811,16 +1862,16 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_intrusion_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_intrusion_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1842,6 +1893,7 @@
               "dell_service_tag": true,
               "device_ip": true,
               "index": true,
+              "instance": true,
               "region": true,
               "role": true
             },
@@ -1855,8 +1907,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "物理机当前使用功率",
       "fieldConfig": {
@@ -1892,6 +1944,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1903,15 +1956,15 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
-          "expr": "snmp_dell_amperage_reading{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_amperage_reading{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "instant": false,
           "legendFormat": "{{power_location_name}}",
           "range": true,
@@ -1923,8 +1976,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器设备Raid状态信息",
       "fieldConfig": {
@@ -2449,16 +2502,16 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_virtual_disk_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_virtual_disk_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -2467,12 +2520,12 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_virtual_disk_size{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_virtual_disk_size{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", instance=\"$instance\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -2503,11 +2556,11 @@
                 ],
                 "operation": "aggregate"
               },
-              "device_ip": {
+              "index": {
                 "aggregations": [],
                 "operation": "groupby"
               },
-              "index": {
+              "instance": {
                 "aggregations": [],
                 "operation": "groupby"
               },
@@ -2560,8 +2613,8 @@
               "brand": true,
               "dell_idrac_shortname": true,
               "dell_service_tag": true,
-              "device_ip": true,
               "index": true,
+              "instance": true,
               "region": true,
               "role": true
             },
@@ -2575,8 +2628,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器风扇状态信息",
       "fieldConfig": {
@@ -2596,8 +2649,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -2857,16 +2909,16 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_cooling_device_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_cooling_device_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -2875,12 +2927,12 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_cooling_rpm{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_cooling_rpm{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -2967,8 +3019,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器固件状态信息",
       "fieldConfig": {
@@ -2988,8 +3040,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -3263,16 +3314,16 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_firmware_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_firmware_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -3291,8 +3342,8 @@
               "agent_hostname": true,
               "brand": true,
               "dell_idrac_shortname": true,
-              "device_ip": true,
               "index": true,
+              "instance": true,
               "region": true,
               "role": true
             },
@@ -3305,11 +3356,11 @@
               "brand": 4,
               "dell_idrac_shortname": 5,
               "dell_service_tag": 6,
-              "device_ip": 7,
               "firmware_state": 10,
               "firmware_type_name": 8,
               "firmware_version_name": 9,
               "index": 0,
+              "instance": 7,
               "region": 11,
               "role": 12
             },
@@ -3321,8 +3372,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器侵入设备状态信息",
       "fieldConfig": {
@@ -3582,16 +3633,16 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_intrusion_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_intrusion_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -3612,6 +3663,7 @@
               "dell_idrac_shortname": true,
               "device_ip": true,
               "index": true,
+              "instance": true,
               "region": true,
               "role": true
             },
@@ -3631,8 +3683,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器电源状态信息",
       "fieldConfig": {
@@ -4094,16 +4146,16 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_power_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_power_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -4112,12 +4164,12 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_power_max_inputvlo{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_power_max_inputvlo{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", instance=\"$instance\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -4127,12 +4179,12 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_power_current_inputvlo{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_power_current_inputvlo{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", instance=\"$instance\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -4246,8 +4298,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器温度传感器状态信息",
       "fieldConfig": {
@@ -4570,16 +4622,16 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_temperature_probe_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_temperature_probe_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -4588,12 +4640,12 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_temperature_value{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"} / 10",
+          "expr": "snmp_dell_temperature_value{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"} / 10",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -4603,12 +4655,12 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_temperature_threshold{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"} / 10",
+          "expr": "snmp_dell_temperature_threshold{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"} / 10",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -4687,8 +4739,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
       },
       "description": "戴尔物理服务器PCI设备状态信息",
       "fieldConfig": {
@@ -4980,16 +5032,16 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "snmp_dell_pci_device_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+          "expr": "snmp_dell_pci_device_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -5011,6 +5063,7 @@
               "dell_service_tag": true,
               "device_ip": true,
               "index": true,
+              "instance": true,
               "region": true,
               "role": true
             },
@@ -5041,8 +5094,8 @@
       "panels": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器内存状态信息",
           "fieldConfig": {
@@ -5103,7 +5156,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 3
+            "y": 83
           },
           "id": 19,
           "options": {
@@ -5126,12 +5179,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_mem_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_mem_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "time_series",
               "instant": false,
               "legendFormat": "{{mem_fqdd}}",
@@ -5144,8 +5197,8 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器内存信息",
           "fieldConfig": {
@@ -5687,7 +5740,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 3
+            "y": 83
           },
           "id": 20,
           "options": {
@@ -5706,12 +5759,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_mem_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_mem_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -5733,6 +5786,7 @@
                   "dell_service_tag": true,
                   "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -5745,8 +5799,8 @@
                   "brand": 3,
                   "dell_idrac_shortname": 4,
                   "dell_service_tag": 5,
-                  "device_ip": 6,
                   "index": 7,
+                  "instance": 6,
                   "mem_brand": 10,
                   "mem_current_speed": 11,
                   "mem_fqdd": 16,
@@ -5780,8 +5834,8 @@
       "panels": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器硬盘状态信息",
           "fieldConfig": {
@@ -5842,7 +5896,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 12
+            "y": 84
           },
           "id": 26,
           "options": {
@@ -5865,12 +5919,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_physical_disk_self_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_physical_disk_self_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "time_series",
               "instant": false,
               "legendFormat": "{{physical_disk_name}}",
@@ -5883,8 +5937,8 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器硬盘状态信息",
           "fieldConfig": {
@@ -6368,7 +6422,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 12
+            "y": 84
           },
           "id": 27,
           "options": {
@@ -6387,12 +6441,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_physical_disk_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_physical_disk_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -6414,6 +6468,7 @@
                   "dell_service_tag": true,
                   "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -6426,8 +6481,8 @@
                   "brand": 3,
                   "dell_idrac_shortname": 4,
                   "dell_service_tag": 5,
-                  "device_ip": 6,
                   "index": 7,
+                  "instance": 6,
                   "physical_disk_name": 11,
                   "physical_disk_oper_state": 14,
                   "physical_disk_progress": 15,
@@ -6446,8 +6501,8 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器硬盘信息",
           "fieldConfig": {
@@ -7018,7 +7073,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 20
+            "y": 92
           },
           "id": 28,
           "options": {
@@ -7037,12 +7092,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_physical_disk_bus_type{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_physical_disk_bus_type{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -7064,6 +7119,7 @@
                   "dell_service_tag": true,
                   "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -7076,8 +7132,8 @@
                   "brand": 3,
                   "dell_idrac_shortname": 4,
                   "dell_service_tag": 5,
-                  "device_ip": 6,
                   "index": 7,
+                  "instance": 6,
                   "physical_disk_name": 11,
                   "physical_disk_oper_state": 14,
                   "physical_disk_progress": 15,
@@ -7096,8 +7152,8 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器硬盘速率信息",
           "fieldConfig": {
@@ -7673,7 +7729,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 20
+            "y": 92
           },
           "id": 29,
           "options": {
@@ -7693,12 +7749,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_physical_disk_usage{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_physical_disk_usage{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -7720,6 +7776,7 @@
                   "dell_service_tag": true,
                   "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -7732,8 +7789,8 @@
                   "brand": 3,
                   "dell_idrac_shortname": 4,
                   "dell_service_tag": 5,
-                  "device_ip": 6,
                   "index": 7,
+                  "instance": 6,
                   "physical_disk_name": 11,
                   "physical_disk_oper_state": 14,
                   "physical_disk_progress": 15,
@@ -7766,8 +7823,8 @@
       "panels": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器网卡信息",
           "fieldConfig": {
@@ -8104,7 +8161,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 13
+            "y": 85
           },
           "id": 30,
           "options": {
@@ -8124,12 +8181,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_network_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_network_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -8151,6 +8208,7 @@
                   "dell_service_tag": true,
                   "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -8163,8 +8221,8 @@
                   "brand": 3,
                   "dell_idrac_shortname": 4,
                   "dell_service_tag": 5,
-                  "device_ip": 6,
                   "index": 7,
+                  "instance": 6,
                   "mem_brand": 10,
                   "mem_current_speed": 11,
                   "mem_fqdd": 16,
@@ -8198,8 +8256,8 @@
       "panels": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器存储控制器信息",
           "fieldConfig": {
@@ -8526,7 +8584,7 @@
             "h": 4,
             "w": 24,
             "x": 0,
-            "y": 14
+            "y": 94
           },
           "id": 33,
           "options": {
@@ -8546,12 +8604,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_comp_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_comp_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -8560,12 +8618,12 @@
             },
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_rollup_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_rollup_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -8620,11 +8678,11 @@
                     ],
                     "operation": "aggregate"
                   },
-                  "device_ip": {
+                  "index": {
                     "aggregations": [],
                     "operation": "groupby"
                   },
-                  "index": {
+                  "instance": {
                     "aggregations": [],
                     "operation": "groupby"
                   }
@@ -8641,8 +8699,8 @@
                   "brand": true,
                   "dell_idrac_shortname": true,
                   "dell_service_tag": true,
-                  "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -8654,8 +8712,8 @@
                   "contr_driver_version (lastNotNull)": 6,
                   "contr_fw_version (lastNotNull)": 7,
                   "contr_name (lastNotNull)": 5,
-                  "device_ip": 0,
-                  "index": 1
+                  "index": 1,
+                  "instance": 0
                 },
                 "renameByName": {}
               }
@@ -8665,8 +8723,8 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器存储控制器性能信息",
           "fieldConfig": {
@@ -8996,7 +9054,7 @@
             "h": 4,
             "w": 24,
             "x": 0,
-            "y": 18
+            "y": 98
           },
           "id": 34,
           "options": {
@@ -9016,12 +9074,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_cache_size{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_cache_size{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -9030,12 +9088,12 @@
             },
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_security_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_security_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -9045,12 +9103,12 @@
             },
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_balance_mode{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_balance_mode{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -9060,12 +9118,12 @@
             },
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_max_speed{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_max_speed{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -9130,11 +9188,11 @@
                     ],
                     "operation": "aggregate"
                   },
-                  "device_ip": {
+                  "index": {
                     "aggregations": [],
                     "operation": "groupby"
                   },
-                  "index": {
+                  "instance": {
                     "aggregations": [],
                     "operation": "groupby"
                   }
@@ -9151,8 +9209,8 @@
                   "brand": true,
                   "dell_idrac_shortname": true,
                   "dell_service_tag": true,
-                  "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -9164,8 +9222,8 @@
                   "Value #D (lastNotNull)": 7,
                   "contr_display_name (lastNotNull)": 2,
                   "contr_name (lastNotNull)": 3,
-                  "device_ip": 0,
-                  "index": 1
+                  "index": 1,
+                  "instance": 0
                 },
                 "renameByName": {}
               }
@@ -9175,8 +9233,8 @@
         },
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器存储控制器速率信息",
           "fieldConfig": {
@@ -9495,7 +9553,7 @@
             "h": 4,
             "w": 24,
             "x": 0,
-            "y": 22
+            "y": 102
           },
           "id": 35,
           "options": {
@@ -9515,12 +9573,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_rebuild_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_rebuild_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -9529,12 +9587,12 @@
             },
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_reson_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_reson_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -9544,12 +9602,12 @@
             },
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_patrol_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_patrol_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -9559,12 +9617,12 @@
             },
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_bgi_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_bgi_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -9574,12 +9632,12 @@
             },
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_contr_check_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_contr_check_rate{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -9650,11 +9708,11 @@
                     ],
                     "operation": "aggregate"
                   },
-                  "device_ip": {
+                  "index": {
                     "aggregations": [],
                     "operation": "groupby"
                   },
-                  "index": {
+                  "instance": {
                     "aggregations": [],
                     "operation": "groupby"
                   }
@@ -9671,8 +9729,8 @@
                   "brand": true,
                   "dell_idrac_shortname": true,
                   "dell_service_tag": true,
-                  "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -9685,8 +9743,8 @@
                   "Value #E (lastNotNull)": 8,
                   "contr_display_name (lastNotNull)": 2,
                   "contr_name (lastNotNull)": 3,
-                  "device_ip": 0,
-                  "index": 1
+                  "index": 1,
+                  "instance": 0
                 },
                 "renameByName": {}
               }
@@ -9710,8 +9768,8 @@
       "panels": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器FRU信息",
           "fieldConfig": {
@@ -9929,7 +9987,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 15
+            "y": 87
           },
           "id": 31,
           "options": {
@@ -9949,12 +10007,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_fru_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_fru_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -9976,6 +10034,7 @@
                   "dell_service_tag": true,
                   "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -9988,8 +10047,8 @@
                   "brand": 3,
                   "dell_idrac_shortname": 4,
                   "dell_service_tag": 5,
-                  "device_ip": 6,
                   "index": 7,
+                  "instance": 6,
                   "mem_brand": 10,
                   "mem_current_speed": 11,
                   "mem_fqdd": 16,
@@ -10023,8 +10082,8 @@
       "panels": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
           },
           "description": "戴尔物理服务器PCI信息",
           "fieldConfig": {
@@ -10303,7 +10362,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 16
+            "y": 88
           },
           "id": 32,
           "options": {
@@ -10323,12 +10382,12 @@
           "targets": [
             {
               "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+                "type": "victoriametrics-metrics-datasource",
+                "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "snmp_dell_pci_device_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$device_ip\"}",
+              "expr": "snmp_dell_pci_device_status{region=~\"$region\", role=~\"$role\", brand=~\"$brand\", device_ip=\"$instance\"}",
               "format": "table",
               "instant": true,
               "legendFormat": "__auto",
@@ -10350,6 +10409,7 @@
                   "dell_service_tag": true,
                   "device_ip": true,
                   "index": true,
+                  "instance": true,
                   "region": true,
                   "role": true
                 },
@@ -10362,8 +10422,8 @@
                   "brand": 3,
                   "dell_idrac_shortname": 4,
                   "dell_service_tag": 5,
-                  "device_ip": 6,
                   "index": 7,
+                  "instance": 6,
                   "pci_device_brand": 12,
                   "pci_device_desc": 14,
                   "pci_device_fqdd": 13,
@@ -10382,22 +10442,25 @@
       "type": "row"
     }
   ],
-  "schemaVersion": 39,
-  "tags": [],
+  "refresh": "",
+  "schemaVersion": 40,
+  "tags": [
+    "snmp",
+    "VictoriaMetrics",
+    "dell"
+  ],
   "templating": {
     "list": [
       {
         "current": {},
         "datasource": {
-          "type": "prometheus",
-          "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
         },
         "definition": "label_values(snmp_up,region)",
         "description": "设备区域",
-        "hide": 0,
         "includeAll": false,
         "label": "区域",
-        "multi": false,
         "name": "region",
         "options": [],
         "query": {
@@ -10407,22 +10470,19 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 1,
         "type": "query"
       },
       {
         "current": {},
         "datasource": {
-          "type": "prometheus",
-          "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
         },
         "definition": "label_values(snmp_up{region=~\"$region\"},role)",
         "description": "区分设备角色，属于交换机、防火墙、路由器、无线、还是远程管理卡",
-        "hide": 0,
         "includeAll": false,
         "label": "角色",
-        "multi": false,
         "name": "role",
         "options": [],
         "query": {
@@ -10432,22 +10492,18 @@
         },
         "refresh": 1,
         "regex": "/idrac/",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
         "current": {},
         "datasource": {
-          "type": "prometheus",
-          "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
         },
         "definition": "label_values(snmp_up{role=~\"$role\", region=~\"$region\"},brand)",
         "description": "获取品牌信息",
-        "hide": 0,
         "includeAll": false,
         "label": "品牌",
-        "multi": false,
         "name": "brand",
         "options": [],
         "query": {
@@ -10457,23 +10513,20 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 1,
         "type": "query"
       },
       {
         "current": {},
         "datasource": {
-          "type": "prometheus",
-          "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
         },
         "definition": "label_values(snmp_up{region=~\"$region\", role=~\"$role\", brand=~\"$brand\"},device_ip)",
         "description": "列出物理服务器的IP信息",
-        "hide": 0,
         "includeAll": false,
         "label": "物理机IP",
-        "multi": false,
-        "name": "device_ip",
+        "name": "instance",
         "options": [],
         "query": {
           "qryType": 1,
@@ -10482,22 +10535,20 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 3,
+        "sort": 7,
         "type": "query"
       },
       {
         "current": {},
         "datasource": {
-          "type": "prometheus",
-          "uid": "${DS_VICTORIAMETRICS-SINGLE}"
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
         },
         "definition": "query_result(count(snmp_up{region=~\"$region\",role=~\"$role\",brand=~\"$brand\"}))",
         "description": "面板中显示物理服务器总数",
         "hide": 2,
         "includeAll": false,
         "label": "服务器总数",
-        "multi": false,
         "name": "total",
         "options": [],
         "query": {
@@ -10507,9 +10558,19 @@
         },
         "refresh": 1,
         "regex": "/{} (.*) .*/",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
+      },
+      {
+        "baseFilters": [],
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "${DS_VICTORIAMETRICS-METRICS-DATASOURCE}"
+        },
+        "description": "根据标签筛选对应的对象",
+        "filters": [],
+        "label": "筛选",
+        "name": "Filters",
+        "type": "adhoc"
       }
     ]
   },
@@ -10519,8 +10580,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Dell iDRAC SNMP Dashboard for VectoriaMetrics",
-  "uid": "bdlkdhoeuaxvka",
-  "version": 7,
+  "title": "Dell iDRAC SNMP Dashboard for VictoriaMetrics",
+  "uid": "dell-idrac-snmp-categraf-xiaofei-vm",
+  "version": 5,
   "weekStart": ""
 }
