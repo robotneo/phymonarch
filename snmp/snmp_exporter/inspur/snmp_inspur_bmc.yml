@@ -1,0 +1,2423 @@
+# WARNING: This file was auto-generated using snmp_exporter generator, manual changes will be lost.
+auths:
+  auth_inspur_bmc_v2:
+    community: public
+    security_level: noAuthNoPriv
+    auth_protocol: MD5
+    priv_protocol: DES
+    version: 2
+modules:
+  inspur_disk:
+    walk:
+    - 1.3.6.1.4.1.37945.3.1.1.10.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.10.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.10.1.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.10.1.1.6
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.11
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.13
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.14
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.8
+    - 1.3.6.1.4.1.37945.3.1.1.10.2.1.9
+    - 1.3.6.1.4.1.37945.3.1.1.11.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.11.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.11.1.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.11.1.1.6
+    - 1.3.6.1.4.1.37945.3.1.1.11.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.1.11.2.1.11
+    - 1.3.6.1.4.1.37945.3.1.1.11.2.1.12
+    - 1.3.6.1.4.1.37945.3.1.1.11.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.11.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.11.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.11.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.1.9.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.9.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.9.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.9.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.1.9.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.9.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.9.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.9.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.9.2.1.6
+    metrics:
+    - name: serverPhysicDiskPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.10.1.1.5
+      type: gauge
+      help: The presence information associated with the physic disk of this entry
+        . - 1.3.6.1.4.1.37945.3.1.1.10.1.1.5
+      indexes:
+      - labelname: serverPhysicDiskStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPhysicDiskStatusIndex
+        labelname: serverPhysicDiskStatusCtrlLocation
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.1.1.3
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskStatusIndex
+        labelname: serverPhysicDiskStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.1.1.4
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverPhysicDiskStatus
+      oid: 1.3.6.1.4.1.37945.3.1.1.10.1.1.6
+      type: gauge
+      help: The status associated with the physic disk of this entry . - 1.3.6.1.4.1.37945.3.1.1.10.1.1.6
+      indexes:
+      - labelname: serverPhysicDiskStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPhysicDiskStatusIndex
+        labelname: serverPhysicDiskStatusCtrlLocation
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.1.1.3
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskStatusIndex
+        labelname: serverPhysicDiskStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.1.1.4
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverPhysicDiskInfoSize
+      oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.11
+      type: gauge
+      help: The size associated with the physic disk of this entry . - 1.3.6.1.4.1.37945.3.1.1.10.2.1.11
+      indexes:
+      - labelname: serverPhysicDiskInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoCtrlLocation
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.3
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoAttachTo
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.7
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoType
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.8
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoProductor
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.9
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.10
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoFirmwareStateStr
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.13
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoTimeLeft
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.14
+        type: DisplayString
+    - name: serverPhysicDiskInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.5
+      type: gauge
+      help: The presence information associated with the physic disk of this entry
+        . - 1.3.6.1.4.1.37945.3.1.1.10.2.1.5
+      indexes:
+      - labelname: serverPhysicDiskInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoCtrlLocation
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.3
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoAttachTo
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.7
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoType
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.8
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoProductor
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.9
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.10
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoFirmwareStateStr
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.13
+        type: DisplayString
+      - labels:
+        - serverPhysicDiskInfoIndex
+        labelname: serverPhysicDiskInfoTimeLeft
+        oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.14
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverLogicDiskStatusPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.11.1.1.5
+      type: gauge
+      help: The presence information associated with the logic disk of this entry
+        . - 1.3.6.1.4.1.37945.3.1.1.11.1.1.5
+      indexes:
+      - labelname: serverLogicDiskStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverLogicDiskStatusIndex
+        labelname: serverLogicDiskStatusCtrlLocation
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.1.1.3
+        type: DisplayString
+      - labels:
+        - serverLogicDiskStatusIndex
+        labelname: serverLogicDiskStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.1.1.4
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverLogicDiskStatus
+      oid: 1.3.6.1.4.1.37945.3.1.1.11.1.1.6
+      type: gauge
+      help: The status associated with the logic disk of this entry . - 1.3.6.1.4.1.37945.3.1.1.11.1.1.6
+      indexes:
+      - labelname: serverLogicDiskStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverLogicDiskStatusIndex
+        labelname: serverLogicDiskStatusCtrlLocation
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.1.1.3
+        type: DisplayString
+      - labels:
+        - serverLogicDiskStatusIndex
+        labelname: serverLogicDiskStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.1.1.4
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverLogicDiskInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.11.2.1.5
+      type: gauge
+      help: The presence information associated with the logic disk of this entry
+        . - 1.3.6.1.4.1.37945.3.1.1.11.2.1.5
+      indexes:
+      - labelname: serverLogicDiskInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverLogicDiskInfoIndex
+        labelname: serverLogicDiskInfoCtrlLocation
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.2.1.3
+        type: DisplayString
+      - labels:
+        - serverLogicDiskInfoIndex
+        labelname: serverLogicDiskInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.2.1.4
+        type: DisplayString
+      - labels:
+        - serverLogicDiskInfoIndex
+        labelname: serverLogicDiskInfoRaidLevelStr
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.2.1.7
+        type: DisplayString
+      - labels:
+        - serverLogicDiskInfoIndex
+        labelname: serverLogicDiskInfoAccessPolicy
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.2.1.10
+        type: DisplayString
+      - labels:
+        - serverLogicDiskInfoIndex
+        labelname: serverLogicDiskInfoReadPolicy
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.2.1.11
+        type: DisplayString
+      - labels:
+        - serverLogicDiskInfoIndex
+        labelname: serverLogicDiskInfoWritePolicy
+        oid: 1.3.6.1.4.1.37945.3.1.1.11.2.1.12
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverRaidPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.9.1.1.3
+      type: gauge
+      help: The presence information associated with the raid of this entry . - 1.3.6.1.4.1.37945.3.1.1.9.1.1.3
+      indexes:
+      - labelname: serverRaidStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverRaidStatusIndex
+        labelname: serverRaidStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.9.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverRaidStatus
+      oid: 1.3.6.1.4.1.37945.3.1.1.9.1.1.4
+      type: gauge
+      help: The status associated with the raid of this entry . - 1.3.6.1.4.1.37945.3.1.1.9.1.1.4
+      indexes:
+      - labelname: serverRaidStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverRaidStatusIndex
+        labelname: serverRaidStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.9.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverRaidInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.9.2.1.3
+      type: gauge
+      help: The presence information associated with the raid of this entry . - 1.3.6.1.4.1.37945.3.1.1.9.2.1.3
+      indexes:
+      - labelname: serverRaidInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverRaidInfoIndex
+        labelname: serverRaidInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.9.2.1.2
+        type: DisplayString
+      - labels:
+        - serverRaidInfoIndex
+        labelname: serverRaidInfoProductName
+        oid: 1.3.6.1.4.1.37945.3.1.1.9.2.1.4
+        type: DisplayString
+      - labels:
+        - serverRaidInfoIndex
+        labelname: serverRaidInfoSerialNumber
+        oid: 1.3.6.1.4.1.37945.3.1.1.9.2.1.5
+        type: DisplayString
+      - labels:
+        - serverRaidInfoIndex
+        labelname: serverRaidInfoVendor
+        oid: 1.3.6.1.4.1.37945.3.1.1.9.2.1.6
+        type: DisplayString
+      - labels:
+        - serverRaidInfoIndex
+        labelname: serverRaidInfoFirmwareVersion
+        oid: 1.3.6.1.4.1.37945.3.1.1.9.2.1.10
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    filters:
+    - oid: 1.3.6.1.4.1.37945.3.1.1.9.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.9.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.9.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.9.1.1.4
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.9.2.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.6
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.10
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.10.1.1.5
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.10.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.10.1.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.10.1.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.10.1.1.6
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.5
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.7
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.8
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.9
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.10
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.11
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.13
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.14
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.11.1.1.5
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.11.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.11.1.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.11.1.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.11.1.1.6
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.11.2.1.5
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.7
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.10
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.11
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.12
+      values:
+      - "1"
+  inspur_fan:
+    walk:
+    - 1.3.6.1.4.1.37945.3.1.1.8.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.8.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.8.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.11
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.6
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.8
+    - 1.3.6.1.4.1.37945.3.1.1.8.2.1.9
+    metrics:
+    - name: serverFanPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.1.1.3
+      type: gauge
+      help: The presence information associated with the fan of this entry . - 1.3.6.1.4.1.37945.3.1.1.8.1.1.3
+      indexes:
+      - labelname: serverFanStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanStatusIndex
+        labelname: serverFanStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverFanStatus
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.1.1.4
+      type: gauge
+      help: The status associated with the fan of this entry . - 1.3.6.1.4.1.37945.3.1.1.8.1.1.4
+      indexes:
+      - labelname: serverFanStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanStatusIndex
+        labelname: serverFanStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverFanInfoUpCT
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.10
+      type: gauge
+      help: The up critical threshold associated with the fan of this entry . - 1.3.6.1.4.1.37945.3.1.1.8.2.1.10
+      indexes:
+      - labelname: serverFanInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanInfoIndex
+        labelname: serverFanInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+        type: DisplayString
+    - name: serverFanInfoUpNRT
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.11
+      type: gauge
+      help: The up non recovery threshold associated with the fan of this entry .
+        - 1.3.6.1.4.1.37945.3.1.1.8.2.1.11
+      indexes:
+      - labelname: serverFanInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanInfoIndex
+        labelname: serverFanInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+        type: DisplayString
+    - name: serverFanInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.3
+      type: gauge
+      help: The presence information associated with the fan of this entry . - 1.3.6.1.4.1.37945.3.1.1.8.2.1.3
+      indexes:
+      - labelname: serverFanInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanInfoIndex
+        labelname: serverFanInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverFanInfoSpeed
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.4
+      type: gauge
+      help: The speed associated with the fan of this entry . - 1.3.6.1.4.1.37945.3.1.1.8.2.1.4
+      indexes:
+      - labelname: serverFanInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanInfoIndex
+        labelname: serverFanInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+        type: DisplayString
+    - name: serverFanInfoDutyRatio
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.5
+      type: gauge
+      help: The duty ratio associated with the fan of this entry . - 1.3.6.1.4.1.37945.3.1.1.8.2.1.5
+      indexes:
+      - labelname: serverFanInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanInfoIndex
+        labelname: serverFanInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+        type: DisplayString
+    - name: serverFanInfoLowNRT
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.6
+      type: gauge
+      help: The low non recovery threshold associated with the fan of this entry .
+        - 1.3.6.1.4.1.37945.3.1.1.8.2.1.6
+      indexes:
+      - labelname: serverFanInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanInfoIndex
+        labelname: serverFanInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+        type: DisplayString
+    - name: serverFanInfoLowCT
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.7
+      type: gauge
+      help: The low critical threshold associated with the fan of this entry . - 1.3.6.1.4.1.37945.3.1.1.8.2.1.7
+      indexes:
+      - labelname: serverFanInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanInfoIndex
+        labelname: serverFanInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+        type: DisplayString
+    - name: serverFanInfoLowNCT
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.8
+      type: gauge
+      help: The low non critical threshold associated with the fan of this entry .
+        - 1.3.6.1.4.1.37945.3.1.1.8.2.1.8
+      indexes:
+      - labelname: serverFanInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanInfoIndex
+        labelname: serverFanInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+        type: DisplayString
+    - name: serverFanInfoUpNCT
+      oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.9
+      type: gauge
+      help: The up non critical threshold associated with the fan of this entry .
+        - 1.3.6.1.4.1.37945.3.1.1.8.2.1.9
+      indexes:
+      - labelname: serverFanInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverFanInfoIndex
+        labelname: serverFanInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+        type: DisplayString
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    filters:
+    - oid: 1.3.6.1.4.1.37945.3.1.1.8.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.8.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.8.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.8.1.1.4
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.6
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.7
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.8
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.9
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.10
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.11
+      values:
+      - "1"
+  inspur_general:
+    walk:
+    - 1.3.6.1.4.1.37945.3.1.1.12.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.3.1.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.3.1.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.3.1.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.3.2.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.3.2.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.3.2.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.3.5.1.1
+    get:
+    - 1.3.6.1.4.1.37945.3.1.3.3.1.1.3.14
+    - 1.3.6.1.4.1.37945.3.1.3.3.1.1.3.17
+    - 1.3.6.1.6.3.10.2.1.3.0
+    metrics:
+    - name: serverBMCInfoVersion
+      oid: 1.3.6.1.4.1.37945.3.1.1.12.2.1.7
+      type: DisplayString
+      help: The version information associated with the BMC module of this entry .
+        - 1.3.6.1.4.1.37945.3.1.1.12.2.1.7
+      indexes:
+      - labelname: serverBMCInfoIndex
+        type: gauge
+    - name: serverHealthSummaryStatusPresent
+      oid: 1.3.6.1.4.1.37945.3.1.3.1.1.1.3
+      type: gauge
+      help: The presence associated with the server of this entry . - 1.3.6.1.4.1.37945.3.1.3.1.1.1.3
+      indexes:
+      - labelname: serverHealthSummaryStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverHealthSummaryStatusIndex
+        labelname: serverHealthSummaryStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.3.1.1.1.2
+        type: DisplayString
+      - labels: []
+        labelname: serverHealthSummaryStatusIndex
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverHealthSummaryStatus
+      oid: 1.3.6.1.4.1.37945.3.1.3.1.1.1.4
+      type: gauge
+      help: The summary status associated with the server of this entry . - 1.3.6.1.4.1.37945.3.1.3.1.1.1.4
+      indexes:
+      - labelname: serverHealthSummaryStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverHealthSummaryStatusIndex
+        labelname: serverHealthSummaryStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.3.1.1.1.2
+        type: DisplayString
+      - labels: []
+        labelname: serverHealthSummaryStatusIndex
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverVersionSummaryPresent
+      oid: 1.3.6.1.4.1.37945.3.1.3.2.1.1.3
+      type: gauge
+      help: The presence information associated with the server of this entry . -
+        1.3.6.1.4.1.37945.3.1.3.2.1.1.3
+      indexes:
+      - labelname: serverVersionSummaryIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVersionSummaryIndex
+        labelname: serverVersionSummaryName
+        oid: 1.3.6.1.4.1.37945.3.1.3.2.1.1.2
+        type: DisplayString
+      - labels:
+        - serverVersionSummaryIndex
+        labelname: serverVersionSummary
+        oid: 1.3.6.1.4.1.37945.3.1.3.2.1.1.4
+        type: DisplayString
+      - labels: []
+        labelname: serverVersionSummaryIndex
+      - labels: []
+        labelname: serverVersionSummaryIndex
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverBoardFRUInfoAttributeValue
+      oid: 1.3.6.1.4.1.37945.3.1.3.3.1.1.3
+      type: DisplayString
+      help: The attribute value associated with the server of this entry . - 1.3.6.1.4.1.37945.3.1.3.3.1.1.3
+      indexes:
+      - labelname: serverBoardFRUInfoIndex
+        type: gauge
+    - name: serverKeyInfoName
+      oid: 1.3.6.1.4.1.37945.3.1.3.5.1.1.2
+      type: DisplayString
+      help: The name associated with the server of this entry . - 1.3.6.1.4.1.37945.3.1.3.5.1.1.2
+      indexes:
+      - labelname: serverKeyInfoIndex
+        type: gauge
+    - name: serverKeyInfoPowerState
+      oid: 1.3.6.1.4.1.37945.3.1.3.5.1.1.3
+      type: gauge
+      help: The power state associated with the server of this entry, 1-power on；0-power
+        off. - 1.3.6.1.4.1.37945.3.1.3.5.1.1.3
+      indexes:
+      - labelname: serverKeyInfoIndex
+        type: gauge
+      enum_values:
+        0: power-off
+        1: power-on
+    - name: serverKeyInfoUIDState
+      oid: 1.3.6.1.4.1.37945.3.1.3.5.1.1.4
+      type: gauge
+      help: The UID state associated with the server of this entry,255-UID on;0-UID
+        off;1-UID 1hz;2-UID 2hz;4-UID 4hz;254-UID INVALID . - 1.3.6.1.4.1.37945.3.1.3.5.1.1.4
+      indexes:
+      - labelname: serverKeyInfoIndex
+        type: gauge
+      enum_values:
+        0: UID-off
+        255: UID-on
+    - name: serverKeyInfoTotalPower
+      oid: 1.3.6.1.4.1.37945.3.1.3.5.1.1.5
+      type: gauge
+      help: The total power associated with the server of this entry, unit:w. - 1.3.6.1.4.1.37945.3.1.3.5.1.1.5
+      indexes:
+      - labelname: serverKeyInfoIndex
+        type: gauge
+    - name: serverKeyInfoInlettemp
+      oid: 1.3.6.1.4.1.37945.3.1.3.5.1.1.6
+      type: gauge
+      help: The inlet tempreature associated with the server of this entry, unit:C.
+        - 1.3.6.1.4.1.37945.3.1.3.5.1.1.6
+      indexes:
+      - labelname: serverKeyInfoIndex
+        type: gauge
+    - name: serverKeyInfoOutlettemp
+      oid: 1.3.6.1.4.1.37945.3.1.3.5.1.1.7
+      type: gauge
+      help: The outlet tempreature associated with the server of this entry, unit:C.
+        - 1.3.6.1.4.1.37945.3.1.3.5.1.1.7
+      indexes:
+      - labelname: serverKeyInfoIndex
+        type: gauge
+    - name: serverKeyInfoRestartTimes
+      oid: 1.3.6.1.4.1.37945.3.1.3.5.1.1.8
+      type: gauge
+      help: The restart times associated with the server of this entry, unit:C. -
+        1.3.6.1.4.1.37945.3.1.3.5.1.1.8
+      indexes:
+      - labelname: serverKeyInfoIndex
+        type: gauge
+    - name: snmpEngineTime
+      oid: 1.3.6.1.6.3.10.2.1.3
+      type: gauge
+      help: The number of seconds since the value of the snmpEngineBoots object last
+        changed - 1.3.6.1.6.3.10.2.1.3
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    filters:
+    - oid: 1.3.6.1.4.1.37945.3.1.3.2.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.3.2.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.3.2.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.3.2.1.1.4
+      values:
+      - "1"
+  inspur_pcie:
+    walk:
+    - 1.3.6.1.4.1.37945.3.1.1.3.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.3.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.3.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.3.1.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.3.1.1.6
+    - 1.3.6.1.4.1.37945.3.1.1.3.1.1.7
+    - 1.3.6.1.4.1.37945.3.1.1.3.1.1.8
+    - 1.3.6.1.4.1.37945.3.1.1.3.1.1.9
+    metrics:
+    - name: serverPCIEInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.4
+      type: gauge
+      help: The presence information with the PCIE of this entry . - 1.3.6.1.4.1.37945.3.1.1.3.1.1.4
+      indexes:
+      - labelname: serverPCIEInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPCIEInfoIndex
+        labelname: serverPCIEInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.2
+        type: DisplayString
+      - labels:
+        - serverPCIEInfoIndex
+        labelname: serverPCIEInfoSlotOnBoard
+        oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.3
+        type: DisplayString
+      - labels:
+        - serverPCIEInfoIndex
+        labelname: serverPCIEInfoDeviceType
+        oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.5
+        type: DisplayString
+      - labels:
+        - serverPCIEInfoIndex
+        labelname: serverPCIEInfoVender
+        oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.6
+        type: DisplayString
+      - labels:
+        - serverPCIEInfoIndex
+        labelname: serverPCIEInfoDevice
+        oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.7
+        type: DisplayString
+      - labels:
+        - serverPCIEInfoIndex
+        labelname: serverPCIEInfoRatedWidth
+        oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.8
+        type: DisplayString
+      - labels:
+        - serverPCIEInfoIndex
+        labelname: serverPCIEInfoRatedSpeed
+        oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.9
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    filters:
+    - oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.4
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.6
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.7
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.8
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.9
+      values:
+      - "1"
+  inspur_power:
+    walk:
+    - 1.3.6.1.4.1.37945.3.1.1.7.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.7.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.7.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.11
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.12
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.13
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.14
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.15
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.16
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+    - 1.3.6.1.4.1.37945.3.1.2.2.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.2.2.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.2.2.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.2.2.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.2.2.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.2.2.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.2.2.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.2.2.2.1.6
+    - 1.3.6.1.4.1.37945.3.1.2.2.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.2.2.2.1.8
+    - 1.3.6.1.4.1.37945.3.1.2.2.2.1.9
+    - 1.3.6.1.4.1.37945.3.1.2.3.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.2.3.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.2.3.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.2.3.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.2.3.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.2.3.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.2.3.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.2.3.2.1.6
+    - 1.3.6.1.4.1.37945.3.1.2.3.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.2.3.2.1.8
+    - 1.3.6.1.4.1.37945.3.1.2.3.2.1.9
+    metrics:
+    - name: serverPSUPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.1.1.3
+      type: gauge
+      help: The presence information associated with the PSU of this entry . - 1.3.6.1.4.1.37945.3.1.1.7.1.1.3
+      indexes:
+      - labelname: serverPSUStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUStatusIndex
+        labelname: serverPSUStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverPSUStatus
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.1.1.4
+      type: gauge
+      help: The status associated with the PSU of this entry . - 1.3.6.1.4.1.37945.3.1.1.7.1.1.4
+      indexes:
+      - labelname: serverPSUStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUStatusIndex
+        labelname: serverPSUStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverPSUInfoTemp
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.10
+      type: gauge
+      help: The tempreature associated with the PSU of this entry, unit:C. - 1.3.6.1.4.1.37945.3.1.1.7.2.1.10
+      indexes:
+      - labelname: serverPSUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRID
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoFWVer
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+        type: DisplayString
+    - name: serverPSUInfoPowerIn
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.11
+      type: gauge
+      help: The input power associated with the PSU of this entry, unit:w. - 1.3.6.1.4.1.37945.3.1.1.7.2.1.11
+      indexes:
+      - labelname: serverPSUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRID
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoFWVer
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+        type: DisplayString
+    - name: serverPSUInfoPowerOut
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.12
+      type: gauge
+      help: The output power associated with the PSU of this entry, unit:w. - 1.3.6.1.4.1.37945.3.1.1.7.2.1.12
+      indexes:
+      - labelname: serverPSUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRID
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoFWVer
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+        type: DisplayString
+    - name: serverPSUInfoVoltIn
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.13
+      type: gauge
+      help: The input voltage associated with the PSU of this entry, unit:V. - 1.3.6.1.4.1.37945.3.1.1.7.2.1.13
+      indexes:
+      - labelname: serverPSUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRID
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoFWVer
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+        type: DisplayString
+    - name: serverPSUInfoVoltOut
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.14
+      type: gauge
+      help: The output voltage associated with the PSU of this entry, unit:V. - 1.3.6.1.4.1.37945.3.1.1.7.2.1.14
+      indexes:
+      - labelname: serverPSUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRID
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoFWVer
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+        type: DisplayString
+    - name: serverPSUInfoCurrentIn
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.15
+      type: gauge
+      help: The input current associated with the PSU of this entry, unit:A. - 1.3.6.1.4.1.37945.3.1.1.7.2.1.15
+      indexes:
+      - labelname: serverPSUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRID
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoFWVer
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+        type: DisplayString
+    - name: serverPSUInfoCurrentOut
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.16
+      type: gauge
+      help: The output current associated with the PSU of this entry, unit:A. - 1.3.6.1.4.1.37945.3.1.1.7.2.1.16
+      indexes:
+      - labelname: serverPSUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRID
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoFWVer
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+        type: DisplayString
+    - name: serverPSUInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.3
+      type: gauge
+      help: The presence information associated with the PSU of this entry . - 1.3.6.1.4.1.37945.3.1.1.7.2.1.3
+      indexes:
+      - labelname: serverPSUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRID
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoFWVer
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverPSUInfoPoutMax
+      oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.7
+      type: gauge
+      help: The power out associated with the PSU of this entry . - 1.3.6.1.4.1.37945.3.1.1.7.2.1.7
+      indexes:
+      - labelname: serverPSUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRID
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoMFRModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+        type: DisplayString
+      - labels:
+        - serverPSUInfoIndex
+        labelname: serverPSUInfoFWVer
+        oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+        type: DisplayString
+    - name: serverVoltageMonitorPresent
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.1.1.3
+      type: gauge
+      help: The presence information associated with the voltage module of this entry
+        . - 1.3.6.1.4.1.37945.3.1.2.2.1.1.3
+      indexes:
+      - labelname: serverVoltageMonitorStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorStatusIndex
+        labelname: serverVoltageMonitorStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverVoltageMonitorStatus
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.1.1.4
+      type: gauge
+      help: The status associated with the voltage module of this entry . - 1.3.6.1.4.1.37945.3.1.2.2.1.1.4
+      indexes:
+      - labelname: serverVoltageMonitorStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorStatusIndex
+        labelname: serverVoltageMonitorStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverVoltageMonitorInfoUpNRT
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.10
+      type: gauge
+      help: The up non recovery threshold associated with the voltage module of this
+        entry, unit:mV. - 1.3.6.1.4.1.37945.3.1.2.2.2.1.10
+      indexes:
+      - labelname: serverVoltageMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorInfoIndex
+        labelname: serverVoltageMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+        type: DisplayString
+    - name: serverVoltageMonitorInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.3
+      type: gauge
+      help: The presence information associated with the voltage module of this entry
+        . - 1.3.6.1.4.1.37945.3.1.2.2.2.1.3
+      indexes:
+      - labelname: serverVoltageMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorInfoIndex
+        labelname: serverVoltageMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverVoltageMonitorInfoReading
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.4
+      type: gauge
+      help: The reading value associated with the voltage module of this entry, unit:mV.
+        - 1.3.6.1.4.1.37945.3.1.2.2.2.1.4
+      indexes:
+      - labelname: serverVoltageMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorInfoIndex
+        labelname: serverVoltageMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+        type: DisplayString
+    - name: serverVoltageMonitorInfoLowNRT
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.5
+      type: gauge
+      help: The low non recovery threshold associated with the voltage module of this
+        entry, unit:mV. - 1.3.6.1.4.1.37945.3.1.2.2.2.1.5
+      indexes:
+      - labelname: serverVoltageMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorInfoIndex
+        labelname: serverVoltageMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+        type: DisplayString
+    - name: serverVoltageMonitorInfoLowCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.6
+      type: gauge
+      help: The low critical threshold associated with the voltage module of this
+        entry, unit:mV. - 1.3.6.1.4.1.37945.3.1.2.2.2.1.6
+      indexes:
+      - labelname: serverVoltageMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorInfoIndex
+        labelname: serverVoltageMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+        type: DisplayString
+    - name: serverVoltageMonitorInfoLowNCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.7
+      type: gauge
+      help: The low non critical threshold associated with the voltage module of this
+        entry, unit:mV. - 1.3.6.1.4.1.37945.3.1.2.2.2.1.7
+      indexes:
+      - labelname: serverVoltageMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorInfoIndex
+        labelname: serverVoltageMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+        type: DisplayString
+    - name: serverVoltageMonitorInfoUpNCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.8
+      type: gauge
+      help: The up non critical threshold associated with the voltage module of this
+        entry, unit:mV. - 1.3.6.1.4.1.37945.3.1.2.2.2.1.8
+      indexes:
+      - labelname: serverVoltageMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorInfoIndex
+        labelname: serverVoltageMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+        type: DisplayString
+    - name: serverVoltageMonitorInfoUpCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.9
+      type: gauge
+      help: The up critical threshold associated with the voltage module of this entry,
+        unit:mV. - 1.3.6.1.4.1.37945.3.1.2.2.2.1.9
+      indexes:
+      - labelname: serverVoltageMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverVoltageMonitorInfoIndex
+        labelname: serverVoltageMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+        type: DisplayString
+    - name: serverPowerMonitorPresent
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.1.1.3
+      type: gauge
+      help: The presence information associated with the power module of this entry
+        . - 1.3.6.1.4.1.37945.3.1.2.3.1.1.3
+      indexes:
+      - labelname: serverPowerMonitorStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorStatusIndex
+        labelname: serverPowerMonitorStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverPowerMonitorStatus
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.1.1.4
+      type: gauge
+      help: The status associated with the power module of this entry . - 1.3.6.1.4.1.37945.3.1.2.3.1.1.4
+      indexes:
+      - labelname: serverPowerMonitorStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorStatusIndex
+        labelname: serverPowerMonitorStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverPowerMonitorInfoUpNRT
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.10
+      type: gauge
+      help: The up non recovery threshold associated with the power module of this
+        entry, unit:w. - 1.3.6.1.4.1.37945.3.1.2.3.2.1.10
+      indexes:
+      - labelname: serverPowerMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorInfoIndex
+        labelname: serverPowerMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+        type: DisplayString
+    - name: serverPowerMonitorInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.3
+      type: gauge
+      help: The presence information associated with the power module of this entry
+        . - 1.3.6.1.4.1.37945.3.1.2.3.2.1.3
+      indexes:
+      - labelname: serverPowerMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorInfoIndex
+        labelname: serverPowerMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverPowerMonitorInfoReading
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.4
+      type: gauge
+      help: The reading value associated with the power module of this entry, unit:w.
+        - 1.3.6.1.4.1.37945.3.1.2.3.2.1.4
+      indexes:
+      - labelname: serverPowerMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorInfoIndex
+        labelname: serverPowerMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+        type: DisplayString
+    - name: serverPowerMonitorInfoLowNRT
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.5
+      type: gauge
+      help: The low non recovery threshold associated with the power module of this
+        entry, unit:w. - 1.3.6.1.4.1.37945.3.1.2.3.2.1.5
+      indexes:
+      - labelname: serverPowerMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorInfoIndex
+        labelname: serverPowerMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+        type: DisplayString
+    - name: serverPowerMonitorInfoLowCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.6
+      type: gauge
+      help: The low critical threshold associated with the power module of this entry,
+        unit:w. - 1.3.6.1.4.1.37945.3.1.2.3.2.1.6
+      indexes:
+      - labelname: serverPowerMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorInfoIndex
+        labelname: serverPowerMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+        type: DisplayString
+    - name: serverPowerMonitorInfoLowNCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.7
+      type: gauge
+      help: The low non critical threshold associated with the power module of this
+        entry, unit:w. - 1.3.6.1.4.1.37945.3.1.2.3.2.1.7
+      indexes:
+      - labelname: serverPowerMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorInfoIndex
+        labelname: serverPowerMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+        type: DisplayString
+    - name: serverPowerMonitorInfoUpNCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.8
+      type: gauge
+      help: The up non critical threshold associated with the power module of this
+        entry, unit:w. - 1.3.6.1.4.1.37945.3.1.2.3.2.1.8
+      indexes:
+      - labelname: serverPowerMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorInfoIndex
+        labelname: serverPowerMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+        type: DisplayString
+    - name: serverPowerMonitorInfoUpCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.9
+      type: gauge
+      help: The up critical threshold associated with the power module of this entry,
+        unit:w. - 1.3.6.1.4.1.37945.3.1.2.3.2.1.9
+      indexes:
+      - labelname: serverPowerMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverPowerMonitorInfoIndex
+        labelname: serverPowerMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+        type: DisplayString
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    filters:
+    - oid: 1.3.6.1.4.1.37945.3.1.1.7.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.7.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.7.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.7.1.1.4
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.6
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.7
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.10
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.11
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.12
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.13
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.14
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.15
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.16
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.2.2.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.2.2.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.2.2.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.2.2.1.1.4
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.6
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.7
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.8
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.9
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.10
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.2.3.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.2.3.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.2.3.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.2.3.1.1.4
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.6
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.7
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.8
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.9
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.10
+      values:
+      - "1"
+  inspur_system:
+    walk:
+    - 1.3.6.1.4.1.37945.3.1.1.1.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.1.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.1.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.1.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.1.1.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.1.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.1.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.1.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.1.2.1.6
+    - 1.3.6.1.4.1.37945.3.1.1.1.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.1.1.2.1.8
+    - 1.3.6.1.4.1.37945.3.1.1.1.2.1.9
+    - 1.3.6.1.4.1.37945.3.1.1.2.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.2.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.2.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.11
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.12
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.6
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.8
+    - 1.3.6.1.4.1.37945.3.1.1.2.2.1.9
+    - 1.3.6.1.4.1.37945.3.1.1.5.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.5.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.5.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.5.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.5.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.5.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.5.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.5.2.1.6
+    - 1.3.6.1.4.1.37945.3.1.1.5.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.1.5.2.1.8
+    - 1.3.6.1.4.1.37945.3.1.1.5.2.1.9
+    - 1.3.6.1.4.1.37945.3.1.1.6.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.1.6.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.1.6.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.1.6.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.1.6.2.1.6
+    - 1.3.6.1.4.1.37945.3.1.1.6.2.1.7
+    metrics:
+    - name: serverCPUStatusPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.1.1.1.3
+      type: gauge
+      help: The present status associated with this entry . - 1.3.6.1.4.1.37945.3.1.1.1.1.1.3
+      indexes:
+      - labelname: serverCPUStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverCPUStatusIndex
+        labelname: serverCPUStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverCPUStatus
+      oid: 1.3.6.1.4.1.37945.3.1.1.1.1.1.4
+      type: gauge
+      help: The status associated with this entry. - 1.3.6.1.4.1.37945.3.1.1.1.1.1.4
+      indexes:
+      - labelname: serverCPUStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverCPUStatusIndex
+        labelname: serverCPUStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverCPUInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.3
+      type: gauge
+      help: The present status associated with this entry . - 1.3.6.1.4.1.37945.3.1.1.1.2.1.3
+      indexes:
+      - labelname: serverCPUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.2
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.4
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL1Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.8
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL2Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.9
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL3Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.10
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverCPUInfoTotalCore
+      oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.5
+      type: gauge
+      help: The num of core CPU associated with the CPU of this entry . - 1.3.6.1.4.1.37945.3.1.1.1.2.1.5
+      indexes:
+      - labelname: serverCPUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.2
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.4
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL1Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.8
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL2Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.9
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL3Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.10
+        type: DisplayString
+    - name: serverCPUInfoUsedCore
+      oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.6
+      type: gauge
+      help: The num of core CPU used associated with the CPU of this entry . - 1.3.6.1.4.1.37945.3.1.1.1.2.1.6
+      indexes:
+      - labelname: serverCPUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.2
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.4
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL1Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.8
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL2Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.9
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL3Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.10
+        type: DisplayString
+    - name: serverCPUInfoThermalDesignPower
+      oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.7
+      type: gauge
+      help: The total power associated with the CPU of this entry . - 1.3.6.1.4.1.37945.3.1.1.1.2.1.7
+      indexes:
+      - labelname: serverCPUInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.2
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoModel
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.4
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL1Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.8
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL2Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.9
+        type: DisplayString
+      - labels:
+        - serverCPUInfoIndex
+        labelname: serverCPUInfoL3Cache
+        oid: 1.3.6.1.4.1.37945.3.1.1.1.2.1.10
+        type: DisplayString
+    - name: serverMemoryPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.2.1.1.3
+      type: gauge
+      help: The present status associated with the memory of this entry . - 1.3.6.1.4.1.37945.3.1.1.2.1.1.3
+      indexes:
+      - labelname: serverMemoryStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverMemoryStatusIndex
+        labelname: serverMemoryStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverMemoryStatus
+      oid: 1.3.6.1.4.1.37945.3.1.1.2.1.1.4
+      type: gauge
+      help: The memory status associated with the memory of this entry. - 1.3.6.1.4.1.37945.3.1.1.2.1.1.4
+      indexes:
+      - labelname: serverMemoryStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverMemoryStatusIndex
+        labelname: serverMemoryStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverMemoryInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.3
+      type: gauge
+      help: The present status associated with the memory of this entry . - 1.3.6.1.4.1.37945.3.1.1.2.2.1.3
+      indexes:
+      - labelname: serverMemoryInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.2
+        type: DisplayString
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoAttachTo
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.4
+        type: DisplayString
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoType
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.5
+        type: DisplayString
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoMFC
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.6
+        type: DisplayString
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoPartNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.7
+        type: DisplayString
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoSerialNO
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.8
+        type: DisplayString
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoCapacity
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.9
+        type: DisplayString
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoSpeed
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.10
+        type: DisplayString
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoRanks
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.11
+        type: DisplayString
+      - labels:
+        - serverMemoryInfoIndex
+        labelname: serverMemoryInfoDatawidth
+        oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.12
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverHDDPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.5.1.1.3
+      type: gauge
+      help: The presence information associated with the HDD of this entry . - 1.3.6.1.4.1.37945.3.1.1.5.1.1.3
+      indexes:
+      - labelname: serverHDDStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverHDDStatusIndex
+        labelname: serverHDDStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverHDDStatus
+      oid: 1.3.6.1.4.1.37945.3.1.1.5.1.1.4
+      type: gauge
+      help: The status associated with the HDD of this entry . - 1.3.6.1.4.1.37945.3.1.1.5.1.1.4
+      indexes:
+      - labelname: serverHDDStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverHDDStatusIndex
+        labelname: serverHDDStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverHDDInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.3
+      type: gauge
+      help: The presence information associated with the HDD of this entry . - 1.3.6.1.4.1.37945.3.1.1.5.2.1.3
+      indexes:
+      - labelname: serverHDDInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.2
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoBackplaneNo
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.4
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoNVMEFWVersion
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.9
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverHDDInfoError
+      oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.5
+      type: gauge
+      help: The error status associated with the HDD of this entry . - 1.3.6.1.4.1.37945.3.1.1.5.2.1.5
+      indexes:
+      - labelname: serverHDDInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.2
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoBackplaneNo
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.4
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoNVMEFWVersion
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.9
+        type: DisplayString
+    - name: serverHDDInfoLocate
+      oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.6
+      type: gauge
+      help: The locate status associated with the HDD of this entry . - 1.3.6.1.4.1.37945.3.1.1.5.2.1.6
+      indexes:
+      - labelname: serverHDDInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.2
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoBackplaneNo
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.4
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoNVMEFWVersion
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.9
+        type: DisplayString
+    - name: serverHDDInfoRebuild
+      oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.7
+      type: gauge
+      help: The rebuild status associated with the HDD of this entry . - 1.3.6.1.4.1.37945.3.1.1.5.2.1.7
+      indexes:
+      - labelname: serverHDDInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.2
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoBackplaneNo
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.4
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoNVMEFWVersion
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.9
+        type: DisplayString
+    - name: serverHDDInfoNVME
+      oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.8
+      type: gauge
+      help: The nvme flag associated with the HDD of this entry . - 1.3.6.1.4.1.37945.3.1.1.5.2.1.8
+      indexes:
+      - labelname: serverHDDInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.2
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoBackplaneNo
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.4
+        type: DisplayString
+      - labels:
+        - serverHDDInfoIndex
+        labelname: serverHDDInfoNVMEFWVersion
+        oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.9
+        type: DisplayString
+    - name: serverSystemNICPresent
+      oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.3
+      type: gauge
+      help: The presence information associated with the adapter of this entry . -
+        1.3.6.1.4.1.37945.3.1.1.6.2.1.3
+      indexes:
+      - labelname: serverSystemNICInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverSystemNICInfoIndex
+        labelname: serverSystemNICInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.2
+        type: DisplayString
+      - labels:
+        - serverSystemNICInfoIndex
+        labelname: serverSystemNICInfoVendorString
+        oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.5
+        type: DisplayString
+      - labels:
+        - serverSystemNICInfoIndex
+        labelname: serverSystemNICInfoDeviceString
+        oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.6
+        type: DisplayString
+      - labels:
+        - serverSystemNICInfoIndex
+        labelname: serverSystemNICInfoMACAddress
+        oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.7
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverSystemNICInfoPhysicalNICNo
+      oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.4
+      type: gauge
+      help: The physical NIC number associated with the adapter of this entry . -
+        1.3.6.1.4.1.37945.3.1.1.6.2.1.4
+      indexes:
+      - labelname: serverSystemNICInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverSystemNICInfoIndex
+        labelname: serverSystemNICInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.2
+        type: DisplayString
+      - labels:
+        - serverSystemNICInfoIndex
+        labelname: serverSystemNICInfoVendorString
+        oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.5
+        type: DisplayString
+      - labels:
+        - serverSystemNICInfoIndex
+        labelname: serverSystemNICInfoDeviceString
+        oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.6
+        type: DisplayString
+      - labels:
+        - serverSystemNICInfoIndex
+        labelname: serverSystemNICInfoMACAddress
+        oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.7
+        type: DisplayString
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    filters:
+    - oid: 1.3.6.1.4.1.37945.3.1.1.1.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.1.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.1.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.1.1.1.4
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.2.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.2.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.2.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.2.1.1.4
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.6
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.7
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.8
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.9
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.10
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.11
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.6
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.7
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.5.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.5.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.5.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.5.1.1.4
+      values:
+      - "1"
+    - oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.2
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.3
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.4
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.5
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.6
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.7
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.8
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.9
+      values:
+      - "1"
+  inspur_temperature:
+    walk:
+    - 1.3.6.1.4.1.37945.3.1.2.1.1.1.2
+    - 1.3.6.1.4.1.37945.3.1.2.1.1.1.3
+    - 1.3.6.1.4.1.37945.3.1.2.1.1.1.4
+    - 1.3.6.1.4.1.37945.3.1.2.1.2.1.10
+    - 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+    - 1.3.6.1.4.1.37945.3.1.2.1.2.1.3
+    - 1.3.6.1.4.1.37945.3.1.2.1.2.1.4
+    - 1.3.6.1.4.1.37945.3.1.2.1.2.1.5
+    - 1.3.6.1.4.1.37945.3.1.2.1.2.1.6
+    - 1.3.6.1.4.1.37945.3.1.2.1.2.1.7
+    - 1.3.6.1.4.1.37945.3.1.2.1.2.1.8
+    - 1.3.6.1.4.1.37945.3.1.2.1.2.1.9
+    metrics:
+    - name: serverTemperatureMonitorPresent
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.1.1.3
+      type: gauge
+      help: The presence information name associated with the Tempreature module of
+        this entry . - 1.3.6.1.4.1.37945.3.1.2.1.1.1.3
+      indexes:
+      - labelname: serverTemperatureMonitorStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorStatusIndex
+        labelname: serverTemperatureMonitorStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverTemperatureMonitorStatus
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.1.1.4
+      type: gauge
+      help: The status associated with the Tempreature module of this entry . - 1.3.6.1.4.1.37945.3.1.2.1.1.1.4
+      indexes:
+      - labelname: serverTemperatureMonitorStatusIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorStatusIndex
+        labelname: serverTemperatureMonitorStatusName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.1.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: OK
+        2: Warning
+        3: Critical
+        4: NA
+    - name: serverTemperatureMonitorInfoUpNRT
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.10
+      type: gauge
+      help: The up non recovery threshold associated with the tempreature module of
+        this entry, unit:C. - 1.3.6.1.4.1.37945.3.1.2.1.2.1.10
+      indexes:
+      - labelname: serverTemperatureMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorInfoIndex
+        labelname: serverTemperatureMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+        type: DisplayString
+    - name: serverTemperatureMonitorInfoPresent
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.3
+      type: gauge
+      help: The presence information associated with the tempreature module of this
+        entry . - 1.3.6.1.4.1.37945.3.1.2.1.2.1.3
+      indexes:
+      - labelname: serverTemperatureMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorInfoIndex
+        labelname: serverTemperatureMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+        type: DisplayString
+      enum_values:
+        0: Absent
+        1: Present
+        2: Unsupport
+        3: NA
+    - name: serverTemperatureMonitorInfoReading
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.4
+      type: gauge
+      help: The reading value associated with the tempreature module of this entry,
+        unit:C. - 1.3.6.1.4.1.37945.3.1.2.1.2.1.4
+      indexes:
+      - labelname: serverTemperatureMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorInfoIndex
+        labelname: serverTemperatureMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+        type: DisplayString
+    - name: serverTemperatureMonitorInfoLowNRT
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.5
+      type: gauge
+      help: The low non recovery threshold associated with the tempreature module
+        of this entry, unit:C. - 1.3.6.1.4.1.37945.3.1.2.1.2.1.5
+      indexes:
+      - labelname: serverTemperatureMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorInfoIndex
+        labelname: serverTemperatureMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+        type: DisplayString
+    - name: serverTemperatureMonitorInfoLowCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.6
+      type: gauge
+      help: The low critical threshold associated with the tempreature module of this
+        entry, unit:C. - 1.3.6.1.4.1.37945.3.1.2.1.2.1.6
+      indexes:
+      - labelname: serverTemperatureMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorInfoIndex
+        labelname: serverTemperatureMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+        type: DisplayString
+    - name: serverTemperatureMonitorInfoLowNCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.7
+      type: gauge
+      help: The low non critical threshold associated with the tempreature module
+        of this entry, unit:C. - 1.3.6.1.4.1.37945.3.1.2.1.2.1.7
+      indexes:
+      - labelname: serverTemperatureMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorInfoIndex
+        labelname: serverTemperatureMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+        type: DisplayString
+    - name: serverTemperatureMonitorInfoUpNCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.8
+      type: gauge
+      help: The up non critical threshold associated with the tempreature module of
+        this entry, unit:C. - 1.3.6.1.4.1.37945.3.1.2.1.2.1.8
+      indexes:
+      - labelname: serverTemperatureMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorInfoIndex
+        labelname: serverTemperatureMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+        type: DisplayString
+    - name: serverTemperatureMonitorInfoUpCT
+      oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.9
+      type: gauge
+      help: The up critical threshold associated with the tempreature module of this
+        entry, unit:C. - 1.3.6.1.4.1.37945.3.1.2.1.2.1.9
+      indexes:
+      - labelname: serverTemperatureMonitorInfoIndex
+        type: gauge
+      lookups:
+      - labels:
+        - serverTemperatureMonitorInfoIndex
+        labelname: serverTemperatureMonitorInfoName
+        oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+        type: DisplayString
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    filters:
+    - oid: 1.3.6.1.4.1.37945.3.1.2.1.1.1.3
+      targets:
+      - 1.3.6.1.4.1.37945.3.1.2.1.1.1.2
+      - 1.3.6.1.4.1.37945.3.1.2.1.1.1.3
+      - 1.3.6.1.4.1.37945.3.1.2.1.1.1.4
+      values:
+      - "1"

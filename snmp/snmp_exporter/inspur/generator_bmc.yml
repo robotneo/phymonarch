@@ -1,0 +1,1131 @@
+auths:
+  auth_inspur_bmc_v2:
+    # SNMP使用的版本 默认2 版本1使用GETNEXT 版本2和3使用GETBULK
+    version: 2
+    # SNMP v1和v2c版本的团体名，默认"public_v2".
+    community: public
+
+modules:
+  # 服务器常规指标,包含：
+  # 1、BMC版本，产品型号名称，产品序列号
+  # 2、服务器关键性信息 server_key
+  # 3、服务器健康 server_health_summary
+  # 4、部件版本 server_version_summary
+  inspur_general:
+    walk:
+      # snmpEngineTime 从系统网管部分启动以来运行的时间
+      - 1.3.6.1.6.3.10.2.1.3
+      # serverBMCInfoVersion BMC版本
+      - 1.3.6.1.4.1.37945.3.1.1.12.2.1.7
+      # serverBoardFRUInfoAttributeValue 产品型号名称
+      - 1.3.6.1.4.1.37945.3.1.3.3.1.1.3.14
+      # serverBoardFRUInfoAttributeValue 产品序列号
+      - 1.3.6.1.4.1.37945.3.1.3.3.1.1.3.17
+      # serverKeyInfoEntry  实体服务器关键性信息。
+      - 1.3.6.1.4.1.37945.3.1.3.5.1.1
+      # serverHealthSummaryStatusName  实体服务器健康模块名称。
+      - 1.3.6.1.4.1.37945.3.1.3.1.1.1.2
+      # serverHealthSummaryStatusPresent  实体服务器健康模块现状。
+      - 1.3.6.1.4.1.37945.3.1.3.1.1.1.3
+      # serverHealthSummaryStatus  实体服务器健康模块状态。
+      - 1.3.6.1.4.1.37945.3.1.3.1.1.1.4
+      #  serverVersionSummaryName  实体服务器部件版本名称。
+      - 1.3.6.1.4.1.37945.3.1.3.2.1.1.2
+      # serverVersionSummary  实体服务器部件版本信息。
+      - 1.3.6.1.4.1.37945.3.1.3.2.1.1.4
+      #  serverVersionSummaryPresent  实体服务器部件版本状态。
+      - 1.3.6.1.4.1.37945.3.1.3.2.1.1.3
+
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    allow_nonincreasing_oids: false
+    use_unconnected_udp_socket: false
+
+    lookups:
+      # 把serverHealthSummaryStatusName作为标签添加到以serverHealthSummaryStatusIndex为索引的指标中，并删除表索引
+      - source_indexes: [serverHealthSummaryStatusIndex]
+        lookup: serverHealthSummaryStatusName
+        drop_source_indexes: true
+      - source_indexes: [serverVersionSummaryIndex]
+        lookup: serverVersionSummaryName
+        drop_source_indexes: true
+      - source_indexes: [serverVersionSummaryIndex]
+        lookup: serverVersionSummary
+        drop_source_indexes: true
+
+
+    overrides:
+      # 丢弃指标，上面把指标做为标签加入到其他指标中
+      serverKeyInfoIndex:
+        ignore: true
+      serverHealthSummaryStatusName:
+        ignore: true
+      serverVersionSummaryName:
+        ignore: true
+      serverVersionSummary:
+        ignore: true
+      # serverBoardFRUInfoAttributeValue:
+      #   #ignore: true
+      #   regex_extracts:
+      #     Module:
+      #       - regex: ".*"
+      #         value: "$1"
+      #   type: DisplayString
+
+    filters:  
+      dynamic:
+        ############################### 固件 ################################
+        # 固件-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.3.2.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.3.2.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.3.2.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.3.2.1.1.4"
+          values: ["1"]
+
+  # 服务器温度 server_temperature_monitor
+  inspur_temperature:
+    walk:
+      # serverTemperatureMonitorStatusName  温度总及子健康状态名称
+      - 1.3.6.1.4.1.37945.3.1.2.1.1.1.2
+      # serverTemperatureMonitorPresent  温度总及子健康现状
+      - 1.3.6.1.4.1.37945.3.1.2.1.1.1.3
+      # serverTemperatureMonitorStatus  温度总及子健康状态
+      - 1.3.6.1.4.1.37945.3.1.2.1.1.1.4
+      # serverTemperatureMonitorInfoName  温度子信息名称
+      - 1.3.6.1.4.1.37945.3.1.2.1.2.1.2
+      # serverTemperatureMonitorinfoPresent  温度子信息现状
+      - 1.3.6.1.4.1.37945.3.1.2.1.2.1.3
+      # serverTemperatureMonitorInfoReading  温度子信息温度度数
+      - 1.3.6.1.4.1.37945.3.1.2.1.2.1.4
+      # serverTemperatureMonitorInfoLowNRT  温度子信息不可恢复低阀
+      - 1.3.6.1.4.1.37945.3.1.2.1.2.1.5
+      # serverTemperatureMonitorInfoLowCT  温度子信息严重低阀
+      - 1.3.6.1.4.1.37945.3.1.2.1.2.1.6    
+      # serverTemperatureMonitorInfoLowNCT  温度子信息非严重低阀
+      - 1.3.6.1.4.1.37945.3.1.2.1.2.1.7
+      # serverTemperatureMonitorInfoUpNCT  温度子信息非严重高阀
+      - 1.3.6.1.4.1.37945.3.1.2.1.2.1.8
+      # serverTemperatureMonitorInfoUpCT  温度子信息严重高阀
+      - 1.3.6.1.4.1.37945.3.1.2.1.2.1.9
+      # serverTemperatureMonitorInfoUpNRT  温度子信息不可恢复高阀
+      - 1.3.6.1.4.1.37945.3.1.2.1.2.1.10
+
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    allow_nonincreasing_oids: false
+    use_unconnected_udp_socket: false
+
+    lookups:
+      # 把serverTemperatureMonitorStatusName作为标签添加到以serverTemperatureMonitorStatusIndex为索引的指标中，并删除表索引
+      - source_indexes: [serverTemperatureMonitorStatusIndex]
+        lookup: serverTemperatureMonitorStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverTemperatureMonitorInfoIndex]
+        lookup: serverTemperatureMonitorInfoName
+        #drop_source_indexes: true
+
+    overrides:
+      serverTemperatureMonitorStatusName:
+        ignore: true
+      serverTemperatureMonitorInfoName:
+        ignore: true
+
+    filters:
+      dynamic:
+        ############################### 温度总 ################################
+        # 温度总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.2.1.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.2.1.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.2.1.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.2.1.1.1.4"
+          values: ["1"]
+        ############################### 温度总 ################################
+        # 温度-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.2.1.2.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.2.1.2.1.2"
+            - "1.3.6.1.4.1.37945.3.1.2.1.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.2.1.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.2.1.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.2.1.2.1.6"
+            - "1.3.6.1.4.1.37945.3.1.2.1.2.1.7"
+            - "1.3.6.1.4.1.37945.3.1.2.1.2.1.8"
+            - "1.3.6.1.4.1.37945.3.1.2.1.2.1.9"
+            - "1.3.6.1.4.1.37945.3.1.2.1.2.1.10"            
+          values: ["1"]
+
+  # 服务器系统指标,包含：
+  # 1、CPU
+  # 2、内存
+  # 3、网卡
+  # 4、硬盘HDD
+  inspur_system:
+    walk:
+      ############################### CPU ################################
+      # serverCPUStatusName  CPU总及子健康状态名称
+      - 1.3.6.1.4.1.37945.3.1.1.1.1.1.2
+      # serverCPUStatusPresent  CPU总及子健康状态现状
+      - 1.3.6.1.4.1.37945.3.1.1.1.1.1.3
+      # serverCPUStatus  CPU总及子健康状态状态
+      - 1.3.6.1.4.1.37945.3.1.1.1.1.1.4
+      # serverCPUInfoName  CPU子信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.1.2.1.2
+      # serverCPUInfoPresent  CPU子信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.1.2.1.3
+      # serverCPUInfoModel  CPU型号
+      - 1.3.6.1.4.1.37945.3.1.1.1.2.1.4
+      # serverCPUInfoTotalCore  CPU总内核数
+      - 1.3.6.1.4.1.37945.3.1.1.1.2.1.5
+      # serverCPUInfoUsedCore  CPU使用内核数
+      - 1.3.6.1.4.1.37945.3.1.1.1.2.1.6   
+      # serverCPUInfoThermalDesignPower  CPU功耗
+      - 1.3.6.1.4.1.37945.3.1.1.1.2.1.7
+      # serverCPUInfoL1Cache  CPU一级缓存
+      - 1.3.6.1.4.1.37945.3.1.1.1.2.1.8
+      # serverCPUInfoL2Cache  CPU二级缓存
+      - 1.3.6.1.4.1.37945.3.1.1.1.2.1.9
+      # serverCPUInfoL3Cache  CPU三级缓存
+      - 1.3.6.1.4.1.37945.3.1.1.1.2.1.10
+      ############################### MEM ################################
+      # serverMemoryStatusName  内存总及子健康状态位置
+      - 1.3.6.1.4.1.37945.3.1.1.2.1.1.2
+      # serverMemoryPresent  内存总及子健康状态现状
+      - 1.3.6.1.4.1.37945.3.1.1.2.1.1.3
+      # serverMemoryStatus  内存总及子健康状态状态
+      - 1.3.6.1.4.1.37945.3.1.1.2.1.1.4
+      # serverMemoryInfoName  内存子信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.2
+      # serverMemoryInfoPresent  内存子信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.3
+      # serverMemoryInfoAttachTo  内存子信息所属cpu信息
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.4
+      # serverMemoryInfoType  内存子信息内存类型
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.5
+      # serverMemoryInfoMFC  内存子信息内存厂商
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.6   
+      # serverMemoryInfoPartNO  内存子信息内存PN信息
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.7
+      # serverMemoryInfoSerialNO  内存子信息内存SN信息
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.8
+      # serverMemoryInfoCapacity  内存子信息内存容量
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.9
+      # serverMemoryInfoSpeed  内存子信息内存频率
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.10
+      # serverMemoryInfoRanks  内存子信息内存Ranks数
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.11
+      # serverMemoryInfoDatawidth  内存子信息内存带宽信息
+      - 1.3.6.1.4.1.37945.3.1.1.2.2.1.12
+      ############################### NIC ################################
+      # serverSystemNICInfoName  系统网卡信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.2
+      # serverSystemNICPresent  系统网卡信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.3
+      # serverSystemNICInfoPhysicalNICNo  系统网卡信息物理端口数
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.4
+      # serverSystemNICInfoVendorString  系统网卡信息网卡厂商信息
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.5
+      # serverSystemNICInfoDeviceString  系统网卡信息网卡设备名称
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.6
+      # serverSystemNICInfoMACAddress  系统网卡信息网口MAC地址
+      - 1.3.6.1.4.1.37945.3.1.1.6.2.1.7
+      ############################### HDD ################################
+      # serverHDDStatusName  硬盘总及子健康状态名称
+      - 1.3.6.1.4.1.37945.3.1.1.5.1.1.2
+      # serverHDDPresent  硬盘总及子健康状态现状
+      - 1.3.6.1.4.1.37945.3.1.1.5.1.1.3
+      # serverHDDStatus  硬盘总及子健康状态
+      - 1.3.6.1.4.1.37945.3.1.1.5.1.1.4
+      # serverHDDInfoName  硬盘子信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.2
+      # serverHDDInfoPresent  硬盘子信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.3
+      # serverHDDInfoBackplaneNo  硬盘子信息背板号
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.4
+      # serverHDDInfoError  硬盘子信息错误状态
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.5
+      # serverHDDInfoLocate  硬盘子信息定位状态
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.6
+      # serverHDDInfoRebuild  硬盘子信息重建状态
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.7
+      # serverHDDInfoNVME  硬盘子信息NVME支持
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.8
+      # serverHDDInfoNVMEFWVersion  硬盘子信息NVME版本号
+      - 1.3.6.1.4.1.37945.3.1.1.5.2.1.9
+
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    allow_nonincreasing_oids: false
+    use_unconnected_udp_socket: false
+
+    lookups:
+      ############################### CPU ################################
+      # 把serverCPUStatusNameName作为标签添加到以serverCPUStatusIndex为索引的指标中，并删除表索引
+      - source_indexes: [serverCPUStatusIndex]
+        lookup: serverCPUStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverCPUInfoIndex]
+        lookup: serverCPUInfoName
+        #drop_source_indexes: true
+      - source_indexes: [serverCPUInfoIndex]
+        lookup: serverCPUInfoModel
+        #drop_source_indexes: true
+      - source_indexes: [serverCPUInfoIndex]
+        lookup: serverCPUInfoL1Cache
+        #drop_source_indexes: true
+      - source_indexes: [serverCPUInfoIndex]
+        lookup: serverCPUInfoL2Cache
+        #drop_source_indexes: true
+      - source_indexes: [serverCPUInfoIndex]
+        lookup: serverCPUInfoL3Cache
+        #drop_source_indexes: true
+        ############################### MEM ################################
+      - source_indexes: [serverMemoryStatusIndex]
+        lookup: serverMemoryStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoName
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoAttachTo
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoType
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoMFC
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoPartNO
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoSerialNO
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoCapacity
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoSpeed
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoRanks
+        #drop_source_indexes: true
+      - source_indexes: [serverMemoryInfoIndex]
+        lookup: serverMemoryInfoDatawidth
+        #drop_source_indexes: true
+      ############################### NIC ################################
+      - source_indexes: [serverSystemNICInfoIndex]
+        lookup: serverSystemNICInfoName
+        #drop_source_indexes: true
+      - source_indexes: [serverSystemNICInfoIndex]
+        lookup: serverSystemNICInfoVendorString
+        #drop_source_indexes: true
+      - source_indexes: [serverSystemNICInfoIndex]
+        lookup: serverSystemNICInfoDeviceString
+        #drop_source_indexes: true
+      - source_indexes: [serverSystemNICInfoIndex]
+        lookup: serverSystemNICInfoMACAddress
+        #drop_source_indexes: true
+        ############################### HDD ################################
+      - source_indexes: [serverHDDStatusIndex]
+        lookup: serverHDDStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverHDDInfoIndex]
+        lookup: serverHDDInfoName
+        #drop_source_indexes: true
+      - source_indexes: [serverHDDInfoIndex]
+        lookup: serverHDDInfoBackplaneNo
+        #drop_source_indexes: true  
+      - source_indexes: [serverHDDInfoIndex]
+        lookup: serverHDDInfoNVMEFWVersion
+
+    overrides:
+      ############################### CPU ################################
+      serverCPUStatusName:
+        ignore: true
+      serverCPUInfoName:
+        ignore: true
+      serverCPUInfoModel:
+        ignore: true
+      serverCPUInfoL1Cache:  
+        ignore: true
+      serverCPUInfoL2Cache:
+        ignore: true
+      serverCPUInfoL3Cache:
+        ignore: true
+      ############################### MEM ################################
+      serverMemoryStatusName:
+        ignore: true
+      serverMemoryInfoName:
+        ignore: true
+      serverMemoryInfoAttachTo:
+        ignore: true
+      serverMemoryInfoType:
+        ignore: true
+      serverMemoryInfoMFC:
+        ignore: true
+      serverMemoryInfoPartNO:
+        ignore: true
+      serverMemoryInfoSerialNO:
+        ignore: true
+      serverMemoryInfoCapacity:
+        ignore: true
+      serverMemoryInfoSpeed:
+        ignore: true
+      serverMemoryInfoRanks:
+        ignore: true
+      serverMemoryInfoDatawidth:
+        ignore: true
+      ############################### NIC ################################
+      serverSystemNICInfoName:
+        ignore: true
+      serverSystemNICInfoVendorString:
+        ignore: true
+      serverSystemNICInfoDeviceString:
+        ignore: true
+      serverSystemNICInfoMACAddress:
+        ignore: true
+      ############################### HDD ################################
+      serverHDDStatusName:
+        ignore: true
+      serverHDDInfoName:
+        ignore: true
+      serverHDDInfoBackplaneNo:
+        ignore: true
+      serverHDDInfoNVMEFWVersion:
+        ignore: true
+
+    filters:
+      dynamic:
+        # CPU总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.1.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.1.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.1.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.1.1.1.4"
+          values: ["1"]
+        # 内存总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.2.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.2.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.2.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.2.1.1.4"
+          values: ["1"]
+        # 内存-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.2.2.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.6"
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.7"
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.8"
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.9"
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.10"
+            - "1.3.6.1.4.1.37945.3.1.1.2.2.1.11"
+          values: ["1"]
+        # 网卡-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.6.2.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.6.2.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.6.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.6.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.6.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.6.2.1.6"
+            - "1.3.6.1.4.1.37945.3.1.1.6.2.1.7"
+          values: ["1"]
+        # 硬盘总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.5.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.5.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.5.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.5.1.1.4"
+          values: ["1"]
+        # 硬盘-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.5.2.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.5.2.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.5.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.5.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.5.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.5.2.1.6"
+            - "1.3.6.1.4.1.37945.3.1.1.5.2.1.7"
+            - "1.3.6.1.4.1.37945.3.1.1.5.2.1.8"
+            - "1.3.6.1.4.1.37945.3.1.1.5.2.1.9"
+          values: ["1"] 
+
+  # 服务器电力指标,包含：
+  # 1、电源
+  # 2、电压
+  # 3、功耗
+  inspur_power:
+    walk:
+      ############################### 电源 ################################
+      # serverPSUStatusName  电源模块总及子健康名称
+      - 1.3.6.1.4.1.37945.3.1.1.7.1.1.2
+      # serverPSUPresent  电源模块总及子健康现状
+      - 1.3.6.1.4.1.37945.3.1.1.7.1.1.3
+      # serverPSUStatus  电源模块总及子健康状态
+      - 1.3.6.1.4.1.37945.3.1.1.7.1.1.4
+      # serverPSUInfoName  电源模块子信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.2
+      # serverPSUInfoPresent  电源模块子信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.3
+      # serverPSUInfoMFRID  电源模块子信息厂商
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.4
+      # serverPSUInfoMFRModel  电源模块子信息型号
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.5
+      # serverPSUInfoSerialNO  电源模块子信息序列号SN
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.6  
+      # serverPSUInfoPoutMax  电源模块子信息额定功率
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.7
+      # serverPSUInfoFWVer  电源模块子信息固件版本信息
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.8
+      # serverPSUInfoTemp  电源模块子信息温度
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.10
+      # serverPSUInfoPowerIn  电源模块子信息输入功率
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.11
+      # serverPSUInfoPowerOut  电源模块子信息输出功率
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.12
+      # serverPSUInfoVoltIn  电源模块子信息输入电压
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.13
+      # serverPSUInfoVoltOut  电源模块子信息输出电压
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.14
+      # serverPSUInfoCurrentIn  电源模块子信息输入电流
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.15
+      # serverPSUInfoCurrentOut  电源模块子信息输出电流
+      - 1.3.6.1.4.1.37945.3.1.1.7.2.1.16
+      ############################### 电压 ################################
+      # serverVoltageMonitorStatusName  电压总及子健康状态名称
+      - 1.3.6.1.4.1.37945.3.1.2.2.1.1.2
+      # serverVoltageMonitorPresent  电压总及子健康状态现状
+      - 1.3.6.1.4.1.37945.3.1.2.2.1.1.3
+      # serverVoltageMonitorStatus  电压总及子健康状态状态
+      - 1.3.6.1.4.1.37945.3.1.2.2.1.1.4
+      # serverVoltageMonitorInfoName 电压子信息名称
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.2
+      # serverVoltageMonitorInfoPresent 电压子信息现状
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.3
+      # serverVoltageMonitorInfoReading 电压子信息读值
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.4
+      # serverVoltageMonitorInfoLowNRT 电压子信息可恢复低阀
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.5
+      # serverVoltageMonitorInfoLowCT 电压子信息严重低阀
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.6
+      # serverVoltageMonitorInfoLowNCT 电压子信息非严重低阀
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.7
+      # serverVoltageMonitorInfoUpNCT 电压子信息非严重高阀
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.8
+      # serverVoltageMonitorInfoUpCT 电压子信息严重高阀
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.9
+      # serverVoltageMonitorInfoUpNRT 电压子信息不可恢复高阀
+      - 1.3.6.1.4.1.37945.3.1.2.2.2.1.10
+      ############################### 功耗 ################################
+      # serverPowerMonitorStatusName  功耗总及子健康状态名称
+      - 1.3.6.1.4.1.37945.3.1.2.3.1.1.2
+      # serverPowerMonitorPresent  功耗总及子健康状态现状
+      - 1.3.6.1.4.1.37945.3.1.2.3.1.1.3
+      # serverPowerMonitorStatus  功耗总及子健康状态状态
+      - 1.3.6.1.4.1.37945.3.1.2.3.1.1.4
+      # serverPowerMonitorInfoName  功耗子信息名称
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.2
+      # serverPowerMonitorInfoPresent  功耗子信息现状
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.3
+      # serverPowerMonitorInfoReading  功耗子信息读值
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.4
+      # serverPowerMonitorInfoLowNRT  功耗子信息不可恢复低阀
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.5
+      # serverPowerMonitorInfoLowCT  功耗子信息严重低阀
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.6
+      # serverPowerMonitorInfoLowNCT  功耗子信息非严重低阀
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.7
+      # serverPowerMonitorInfoUpNCT  功耗子信息非严重高阀
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.8
+      # serverPowerMonitorInfoUpCT  功耗子信息严重高阀
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.9
+      # serverPowerMonitorInfoUpNRT  功耗子信息不可恢复高阀
+      - 1.3.6.1.4.1.37945.3.1.2.3.2.1.10
+
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    allow_nonincreasing_oids: false
+    use_unconnected_udp_socket: false
+
+    lookups:
+      ############################### 电源 ################################
+      # 把serverPSUStatusName作为标签添加到以serverPSUStatusIndex为索引的指标中，并删除表索引
+      - source_indexes: [serverPSUStatusIndex]
+        lookup: serverPSUStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverPSUInfoIndex]
+        lookup: serverPSUInfoName
+        #drop_source_indexes: true
+      - source_indexes: [serverPSUInfoIndex]
+        lookup: serverPSUInfoMFRID
+        #drop_source_indexes: true
+      - source_indexes: [serverPSUInfoIndex]
+        lookup: serverPSUInfoMFRModel
+        #drop_source_indexes: true
+      - source_indexes: [serverPSUInfoIndex]  
+        lookup: serverPSUInfoSerialNO
+        #drop_source_indexes: true
+      - source_indexes: [serverPSUInfoIndex]
+        lookup: serverPSUInfoFWVer
+        #drop_source_indexes: true
+      ############################### 电压 ################################
+      - source_indexes: [serverVoltageMonitorStatusIndex]
+        lookup: serverVoltageMonitorStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverVoltageMonitorInfoIndex]
+        lookup: serverVoltageMonitorInfoName
+        #drop_source_indexes: true
+      ############################### 功耗 ################################
+      - source_indexes: [serverPowerMonitorStatusIndex]
+        lookup: serverPowerMonitorStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverPowerMonitorInfoIndex]
+        lookup: serverPowerMonitorInfoName
+        #drop_source_indexes: true
+
+    overrides:
+      ################################### 电源 ################################
+      serverPSUStatusName:
+        ignore: true
+      serverPSUInfoName:
+        ignore: true
+      serverPSUInfoMFRID:
+        ignore: true
+      serverPSUInfoMFRModel:
+        ignore: true
+      serverPSUInfoSerialNO:
+        ignore: true
+      serverPSUInfoFWVer:
+        ignore: true
+      ################################### 电压 ################################ 
+      serverVoltageMonitorStatusName:
+        ignore: true
+      serverVoltageMonitorInfoName:
+        ignore: true
+      ################################### 功耗 ################################
+      serverPowerMonitorStatusName:
+        ignore: true
+      serverPowerMonitorInfoName:
+        ignore: true 
+    
+    filters:
+      dynamic:
+        ############################### 电源 ################################
+        # 电源总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.7.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.7.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.7.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.7.1.1.4"
+          values: ["1"]
+        # 电源-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.7.2.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.6"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.7"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.8"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.10"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.11"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.12"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.13"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.14"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.15"
+            - "1.3.6.1.4.1.37945.3.1.1.7.2.1.16"
+          values: ["1"]
+        ############################### 电压 ################################
+        # 电压总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.2.2.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.2.2.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.2.2.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.2.2.1.1.4"
+          values: ["1"]
+        # 电压-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.2.2.2.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.2.2.2.1.2"
+            - "1.3.6.1.4.1.37945.3.1.2.2.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.2.2.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.2.2.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.2.2.2.1.6"
+            - "1.3.6.1.4.1.37945.3.1.2.2.2.1.7"
+            - "1.3.6.1.4.1.37945.3.1.2.2.2.1.8"
+            - "1.3.6.1.4.1.37945.3.1.2.2.2.1.9"
+            - "1.3.6.1.4.1.37945.3.1.2.2.2.1.10"
+          values: ["1"]
+        ############################### 功耗 ################################
+        # 功耗总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.2.3.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.2.3.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.2.3.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.2.3.1.1.4"
+          values: ["1"]
+        # 功耗-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.2.3.2.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.2.3.2.1.2"
+            - "1.3.6.1.4.1.37945.3.1.2.3.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.2.3.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.2.3.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.2.3.2.1.6"
+            - "1.3.6.1.4.1.37945.3.1.2.3.2.1.7"
+            - "1.3.6.1.4.1.37945.3.1.2.3.2.1.8"
+            - "1.3.6.1.4.1.37945.3.1.2.3.2.1.9" 
+            - "1.3.6.1.4.1.37945.3.1.2.3.2.1.10"           
+          values: ["1"]
+
+  # 服务器风扇，V4版本获取异常
+  inspur_fan:
+    walk:
+      ############################### 风扇 ################################
+      # serverFanStatusName  风扇模块总及子健康状态名称
+      - 1.3.6.1.4.1.37945.3.1.1.8.1.1.2
+      # serverFanPresent  风扇模块总及子健康状态现状
+      - 1.3.6.1.4.1.37945.3.1.1.8.1.1.3
+      # serverFanStatus  风扇模块总及子健康状态状态
+      - 1.3.6.1.4.1.37945.3.1.1.8.1.1.4
+      # serverFanInfoName  风扇模块子信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.2
+      # serverFanInfoPresent  风扇模块子信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.3
+      # serverFanInfoSpeed  风扇模块子信息转速信息
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.4
+      # serverFanInfoDutyRatio  风扇模块子信息风扇占空比
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.5
+      # serverFanInfoLowNRT  风扇模块子信息不可恢复低阀
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.6
+      # serverFanInfoLowCT  风扇模块子信息严重低阀
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.7
+      # serverFanInfoLowNCT  风扇模块子信息非严重低阀类型
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.8
+      # serverFanInfoUpNCT  风扇模块子信息非严重高阀
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.9
+      # serverFanInfoUpCT  风扇模块子信息严重高阀
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.10
+      # serverFanInfoUpNRT  风扇模块子信息不可恢复高阀
+      - 1.3.6.1.4.1.37945.3.1.1.8.2.1.11
+
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    allow_nonincreasing_oids: false
+    use_unconnected_udp_socket: false
+
+    lookups:
+      ############################### 风扇 ################################
+      # 把serverFanStatusName作为标签添加到以serverFanStatusIndex为索引的指标中，并删除表索引
+      - source_indexes: [serverFanStatusIndex]
+        lookup: serverFanStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverFanInfoIndex]
+        lookup: serverFanInfoName
+        #drop_source_indexes: true
+
+    overrides:
+      ################################### 风扇 ################################
+      serverFanStatusName:
+        ignore: true
+      serverFanInfoName:
+        ignore: true
+    
+    filters:
+      dynamic:
+        ############################### 风扇 ################################
+        # 风扇总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.8.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.8.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.8.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.8.1.1.4"
+          values: ["1"]
+        # 风扇-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.8.2.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.6"
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.7"
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.8"
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.9"
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.10"
+            - "1.3.6.1.4.1.37945.3.1.1.8.2.1.11"
+          values: ["1"]
+
+  # 服务器磁盘信息
+  # 1、RAID
+  # 2、物理磁盘
+  # 3、逻辑磁盘
+  inspur_disk:
+    walk:
+      ############################### RAID ################################
+      # serverRaidStatusName  RAID总及子健康状态名称
+      - 1.3.6.1.4.1.37945.3.1.1.9.1.1.2
+      # serverRaidPresent  RAID总及子健康状态现状
+      - 1.3.6.1.4.1.37945.3.1.1.9.1.1.3
+      # serverRaidStatus  RAID总及子健康状态状态
+      - 1.3.6.1.4.1.37945.3.1.1.9.1.1.4
+      # serverRaidInfoName  RAID子信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.2
+      # serverRaidInfoPresent  RAID子信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.3
+      # serverRaidInfoProductName  RAID子信息型号
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.4
+      # serverRaidInfoSerialNumber  RAID子信息序列号SN
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.5
+      # serverRaidInfoVendor  RAID子信息厂商信息
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.6
+      # serverRaidInfoFirmwareVersion  RAID子信息版本信息
+      - 1.3.6.1.4.1.37945.3.1.1.9.2.1.10
+      ############################### 物理磁盘 ################################
+      # serverPhysicDiskStatusCtrlLocation  物理磁盘总及子健康状态硬盘对应RAID名称
+      - 1.3.6.1.4.1.37945.3.1.1.10.1.1.3
+      # serverPhysicDiskStatusName  物理磁盘总及子健康状态名称
+      - 1.3.6.1.4.1.37945.3.1.1.10.1.1.4
+      # serverPhysicDiskPresent  物理磁盘总及子健康状态现状
+      - 1.3.6.1.4.1.37945.3.1.1.10.1.1.5
+      # serverPhysicDiskStatus  物理磁盘总及子健康状态状态
+      - 1.3.6.1.4.1.37945.3.1.1.10.1.1.6
+      # serverPhysicDiskInfoCtrlLocation  物理磁盘子信息所在RAID名称
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.3
+      # serverPhysicDiskInfoName  物理磁盘子信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.4
+      # serverPhysicDiskInfoPresent  物理磁盘子信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.5
+      # serverPhysicDiskInfoAttachTo  物理磁盘子信息磁盘对应RAID
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.7
+      # serverPhysicDiskInfoType  物理磁盘子信息磁盘类型
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.8
+      # serverPhysicDiskInfoProductor  物理磁盘子信息磁盘厂商
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.9
+      # serverPhysicDiskInfoModel  物理磁盘子信息磁盘型号
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.10
+      # serverPhysicDiskInfoSize  物理磁盘子信息磁盘容量
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.11
+      # serverPhysicDiskInfoFirmwareStateStr  物理磁盘子信息磁盘状态字符串
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.13
+      # serverPhysicDiskInfoTimeLeft  物理磁盘子信息磁盘剩余寿命
+      - 1.3.6.1.4.1.37945.3.1.1.10.2.1.14
+      ############################### 逻辑磁盘 ################################
+      # serverLogicDiskStatusCtrlLocation  逻辑磁盘总及子健康状态硬盘对应RAID名称
+      - 1.3.6.1.4.1.37945.3.1.1.11.1.1.3
+      # serverLogicDiskStatusName  逻辑磁盘总及子健康状态名称
+      - 1.3.6.1.4.1.37945.3.1.1.11.1.1.4
+      # serverLogicDiskStatusPresent  逻辑磁盘总及子健康状态现状
+      - 1.3.6.1.4.1.37945.3.1.1.11.1.1.5
+      # serverLogicDiskStatus  逻辑磁盘总及子健康状态状态
+      - 1.3.6.1.4.1.37945.3.1.1.11.1.1.6
+      # serverLogicDiskInfoCtrlLocation  逻辑磁盘子信息所在RAID名称
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.3
+      # serverLogicDiskInfoName  逻辑磁盘子信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.4
+      # serverLogicDiskInfoPresent  逻辑磁盘子信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.5
+      # serverLogicDiskInfoRaidLevelStr  逻辑磁盘子信息RAID等级
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.7
+      # serverLogicDiskInfoAccessPolicy  逻辑磁盘子信息访问策略
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.10
+      # serverLogicDiskInfoReadPolicy  逻辑磁盘子信息读策略
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.11
+      # serverLogicDiskInfoWritePolicy  逻辑磁盘子信息写策略
+      - 1.3.6.1.4.1.37945.3.1.1.11.2.1.12
+
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    allow_nonincreasing_oids: false
+    use_unconnected_udp_socket: false
+
+    lookups:
+      # ############################### RAID ################################
+      # # 把serverFanStatusName作为标签添加到以serverFanStatusIndex为索引的指标中，并删除表索引
+      - source_indexes: [serverRaidStatusIndex]
+        lookup: serverRaidStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverRaidInfoIndex]
+        lookup: serverRaidInfoName
+        #drop_source_indexes: true
+      - source_indexes: [serverRaidInfoIndex]
+        lookup: serverRaidInfoProductName
+        #drop_source_indexes: true
+      - source_indexes: [serverRaidInfoIndex]
+        lookup: serverRaidInfoSerialNumber
+        #drop_source_indexes: true
+      - source_indexes: [serverRaidInfoIndex]
+        lookup: serverRaidInfoVendor
+        #drop_source_indexes: true
+      - source_indexes: [serverRaidInfoIndex]
+        lookup: serverRaidInfoFirmwareVersion
+        #drop_source_indexes: true
+      ############################### 物理磁盘 ################################
+      - source_indexes: [serverPhysicDiskStatusIndex]
+        lookup: serverPhysicDiskStatusCtrlLocation
+        #drop_source_indexes: true
+      - source_indexes: [serverPhysicDiskStatusIndex]
+        lookup: serverPhysicDiskStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverPhysicDiskInfoIndex]
+        lookup: serverPhysicDiskInfoCtrlLocation
+        #drop_source_indexes: true
+      - source_indexes: [serverPhysicDiskInfoIndex]
+        lookup: serverPhysicDiskInfoName
+        #drop_source_indexes: true
+      - source_indexes: [serverPhysicDiskInfoIndex]
+        lookup: serverPhysicDiskInfoAttachTo
+        #drop_source_indexes: true
+      - source_indexes: [serverPhysicDiskInfoIndex]
+        lookup: serverPhysicDiskInfoType
+        #drop_source_indexes: true
+      - source_indexes: [serverPhysicDiskInfoIndex]
+        lookup: serverPhysicDiskInfoProductor
+        #drop_source_indexes: true
+      - source_indexes: [serverPhysicDiskInfoIndex]
+        lookup: serverPhysicDiskInfoModel
+        #drop_source_indexes: true
+      - source_indexes: [serverPhysicDiskInfoIndex]
+        lookup: serverPhysicDiskInfoFirmwareStateStr
+        #drop_source_indexes: true
+      - source_indexes: [serverPhysicDiskInfoIndex]
+        lookup: serverPhysicDiskInfoTimeLeft
+        #drop_source_indexes: true
+      ############################### 逻辑磁盘 ################################
+      - source_indexes: [serverLogicDiskStatusIndex]
+        lookup: serverLogicDiskStatusCtrlLocation
+        #drop_source_indexes: true
+      - source_indexes: [serverLogicDiskStatusIndex]
+        lookup: serverLogicDiskStatusName
+        #drop_source_indexes: true
+      - source_indexes: [serverLogicDiskInfoIndex]
+        lookup: serverLogicDiskInfoCtrlLocation
+        #drop_source_indexes: true
+      - source_indexes: [serverLogicDiskInfoIndex]
+        lookup: serverLogicDiskInfoName
+        #drop_source_indexes: true
+      - source_indexes: [serverLogicDiskInfoIndex]
+        lookup: serverLogicDiskInfoRaidLevelStr
+        #drop_source_indexes: true
+      - source_indexes: [serverLogicDiskInfoIndex]
+        lookup: serverLogicDiskInfoAccessPolicy
+        #drop_source_indexes: true
+      - source_indexes: [serverLogicDiskInfoIndex]
+        lookup: serverLogicDiskInfoReadPolicy
+        #drop_source_indexes: true
+      - source_indexes: [serverLogicDiskInfoIndex]
+        lookup: serverLogicDiskInfoWritePolicy
+        #drop_source_indexes: true
+
+    overrides:
+      # ################################### RAID ################################
+      serverRaidStatusName:
+        ignore: true
+      serverRaidInfoName:
+        ignore: true
+      serverRaidInfoProductName:
+        ignore: true
+      serverRaidInfoSerialNumber:
+        ignore: true
+      serverRaidInfoVendor:
+        ignore: true
+      serverRaidInfoFirmwareVersion:
+        ignore: true
+      # ################################### 物理磁盘 ################################
+      serverPhysicDiskStatusCtrlLocation:
+        ignore: true
+      serverPhysicDiskStatusName:
+        ignore: true
+      serverPhysicDiskInfoCtrlLocation:
+        ignore: true
+      serverPhysicDiskInfoName:
+        ignore: true
+      serverPhysicDiskInfoAttachTo:
+        ignore: true
+      serverPhysicDiskInfoType:
+        ignore: true
+      serverPhysicDiskInfoProductor:
+        ignore: true
+      serverPhysicDiskInfoModel:
+        ignore: true
+      serverPhysicDiskInfoFirmwareStateStr:
+        ignore: true
+      serverPhysicDiskInfoTimeLeft:
+        ignore: true
+      # ################################### 逻辑磁盘 ################################
+      serverLogicDiskStatusCtrlLocation:
+        ignore: true
+      serverLogicDiskStatusName:  
+        ignore: true
+      serverLogicDiskInfoCtrlLocation:
+        ignore: true
+      serverLogicDiskInfoName:
+        ignore: true
+      serverLogicDiskInfoRaidLevelStr:
+        ignore: true
+      serverLogicDiskInfoAccessPolicy:
+        ignore: true
+      serverLogicDiskInfoReadPolicy:
+        ignore: true 
+      serverLogicDiskInfoWritePolicy:
+        ignore: true
+    
+    filters:
+      dynamic:
+        ############################### RAID ################################
+        # RAID总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.9.1.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.9.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.9.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.9.1.1.4"
+          values: ["1"]
+        # RAID-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.9.2.1.3
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.9.2.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.9.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.9.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.9.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.9.2.1.6"
+            - "1.3.6.1.4.1.37945.3.1.1.9.2.1.10"
+          values: ["1"]
+        ############################### 物理磁盘 ################################
+        # 物理磁盘总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.10.1.1.5
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.10.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.10.1.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.10.1.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.10.1.1.6"
+          values: ["1"]
+        # 物理磁盘-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.10.2.1.5
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.7"
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.8"
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.9"
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.10"
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.11"
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.13"
+            - "1.3.6.1.4.1.37945.3.1.1.10.2.1.14"
+          values: ["1"]
+        ############################### 逻辑磁盘 ################################
+        # 逻辑磁盘总-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.11.1.1.5
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.11.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.11.1.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.11.1.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.11.1.1.6"
+          values: ["1"]
+        # 逻辑磁盘-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.11.2.1.5
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.11.2.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.11.2.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.11.2.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.11.2.1.7"
+            - "1.3.6.1.4.1.37945.3.1.1.11.2.1.10"
+            - "1.3.6.1.4.1.37945.3.1.1.11.2.1.11"
+            - "1.3.6.1.4.1.37945.3.1.1.11.2.1.12"
+          values: ["1"]
+  # 服务器PCIE信息
+  inspur_pcie:
+    walk:
+      ############################### PCIE ################################
+      # serverPCIEInfoName  PCIE设备信息名称
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.2
+      # serverPCIEInfoSlotOnBoard  PCIE设备信息主板槽位信息
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.3
+      # serverPCIEInfoPresent  PCIE设备信息现状
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.4
+      # serverPCIEInfoDeviceType  PCIE设备信息设备类型
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.5
+      # serverPCIEInfoVender  PCIE设备信息设备厂商
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.6
+      # serverPCIEInfoDevice  PCIE设备信息设备型号
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.7
+      # serverPCIEInfoRatedWidth  PCIE设备信息当前带宽
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.8
+      # serverPCIEInfoRatedSpeed  PCIE设备信息当前速率
+      - 1.3.6.1.4.1.37945.3.1.1.3.1.1.9
+
+    max_repetitions: 25
+    retries: 3
+    timeout: 5s
+    allow_nonincreasing_oids: false
+    use_unconnected_udp_socket: false
+
+    lookups:
+      ############################### PCIE ################################
+      - source_indexes: [serverPCIEInfoIndex]
+        lookup: serverPCIEInfoName
+        #drop_source_indexes: true
+      - source_indexes: [serverPCIEInfoIndex]
+        lookup: serverPCIEInfoSlotOnBoard
+        #drop_source_indexes: true
+      - source_indexes: [serverPCIEInfoIndex]
+        lookup: serverPCIEInfoDeviceType
+        #drop_source_indexes: true
+      - source_indexes: [serverPCIEInfoIndex]
+        lookup: serverPCIEInfoVender
+        #drop_source_indexes: true
+      - source_indexes: [serverPCIEInfoIndex]
+        lookup: serverPCIEInfoDevice
+        #drop_source_indexes: true
+      - source_indexes: [serverPCIEInfoIndex]
+        lookup: serverPCIEInfoRatedWidth
+        #drop_source_indexes: true
+      - source_indexes: [serverPCIEInfoIndex]
+        lookup: serverPCIEInfoRatedSpeed
+        #drop_source_indexes: true
+
+    overrides:
+      ################################### PCIE ################################
+      serverPCIEInfoName:
+        ignore: true
+      serverPCIEInfoSlotOnBoard:
+        ignore: true
+      serverPCIEInfoDeviceType:
+        ignore: true
+      serverPCIEInfoVender:
+        ignore: true
+      serverPCIEInfoDevice:
+        ignore: true
+      serverPCIEInfoRatedWidth:
+        ignore: true
+      serverPCIEInfoRatedSpeed:
+        ignore: true
+
+    filters:
+      dynamic:
+        ############################### PCIE ################################
+        # PCIE-在位状态为1的表示在位，其他丢弃
+        - oid: 1.3.6.1.4.1.37945.3.1.1.3.1.1.4
+          targets:
+            - "1.3.6.1.4.1.37945.3.1.1.3.1.1.2"
+            - "1.3.6.1.4.1.37945.3.1.1.3.1.1.3"
+            - "1.3.6.1.4.1.37945.3.1.1.3.1.1.4"
+            - "1.3.6.1.4.1.37945.3.1.1.3.1.1.5"
+            - "1.3.6.1.4.1.37945.3.1.1.3.1.1.6"
+            - "1.3.6.1.4.1.37945.3.1.1.3.1.1.7"
+            - "1.3.6.1.4.1.37945.3.1.1.3.1.1.8"
+            - "1.3.6.1.4.1.37945.3.1.1.3.1.1.9"
+          values: ["1"]
