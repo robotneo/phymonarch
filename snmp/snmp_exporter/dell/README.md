@@ -53,7 +53,7 @@ scrape_configs:
     - source_labels: ["__param_target"]
       target_label: instance
     - target_label: __address__
-      replacement: 172.17.40.142:9116
+      replacement: 172.16.100.100:9116   # 替换为你 snmp exporter 服务的监听地址和端口
     - source_labels: ["module"]
       target_label: __param_module
     - source_labels: ["auth"]
